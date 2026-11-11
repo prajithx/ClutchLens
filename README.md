@@ -23,6 +23,8 @@ pressure scores or player rankings.
 - `outputs/ground_visualisation_field_inventory.csv` — field-level availability inventory.
 - `dashboard/` — local Flask UI for analytics, player intelligence, and Ground Explorer.
 - `reports/step3c_stadium_experience_review.md` — homepage stadium scroll implementation and validation notes.
+- `reports/step3d_photorealistic_stadium_review.md` — photographic asset audit and homepage asset readiness.
+- `dashboard/static/images/stadium/` — reserved for approved local stadium and pitch photography.
 
 ## Setup and run
 

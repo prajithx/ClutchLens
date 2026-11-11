@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
       : Math.min(1, Math.max(0, -bounds.top / travel));
     journey.style.setProperty("--journey-progress", progress.toFixed(4));
     camera.setAttribute("aria-label", `Stadium camera journey ${Math.round(progress * 100)} percent complete`);
+    camera.style.setProperty("--camera-scale", (1 + progress * 0.28).toFixed(4));
+    camera.style.setProperty("--camera-x", `${progress * -3}%`);
+    camera.style.setProperty("--camera-y", `${progress * -8}%`);
   };
   const schedule = () => {
     if (!frame) frame = window.requestAnimationFrame(update);

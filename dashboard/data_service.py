@@ -13,6 +13,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 PROCESSED = ROOT / "data" / "processed"
+OUTPUTS = ROOT / "outputs"
 
 TRUSTED_METRICS = {
     "source_counts": "verified audit inventory",
@@ -29,6 +30,26 @@ BLOCKED_METRICS = {
     "shot_coordinates": "source contains no verified spatial coordinates",
 }
 
+RECRUITMENT_FILES = {
+    "batter_candidates": "step4b_batter_candidates.csv",
+    "bowler_candidates": "step4b_bowler_candidates.csv",
+    "batter_classification": "step4c_batter_classification.csv",
+    "bowler_classification": "step4c_bowler_classification.csv",
+    "squad": "step4c_rr_squad_evidence.csv",
+    "external": "step4c_external_candidate_pool.csv",
+    "unresolved": "step4c_unresolved_status.csv",
+}
+
+RECRUITMENT_REQUIRED_COLUMNS = {
+    "batter_candidates": {"context_key", "player_id", "player_name", "team_name", "comp_name", "season", "pressure_events", "baseline_events", "pressure_matches", "baseline_matches", "evidence_label", "pressure_semantics"},
+    "bowler_candidates": {"context_key", "player_id", "player_name", "team_name", "comp_name", "season", "pressure_legal_balls", "baseline_legal_balls", "pressure_matches", "baseline_matches", "candidate_dismissal_events", "candidate_dismissal_matches", "evidence_label", "pressure_semantics"},
+    "batter_classification": {"context_key", "player_id", "player_name", "classification", "rr_reference_season_matches", "auction_availability_status", "all_supplied_mapping_contexts"},
+    "bowler_classification": {"context_key", "player_id", "player_name", "classification", "rr_reference_season_matches", "auction_availability_status", "all_supplied_mapping_contexts"},
+    "squad": {"player_id", "player_name", "season", "matches_represented", "role", "auction_availability_status", "evidence_confidence"},
+    "external": {"role", "player_id", "player_name", "historical_context_count", "historical_contexts", "auction_availability_status"},
+    "unresolved": {"classification_key"},
+}
+
 
 def _read_csv(name: str, required: bool = True) -> pd.DataFrame:
     path = RAW / name
@@ -37,6 +58,21 @@ def _read_csv(name: str, required: bool = True) -> pd.DataFrame:
             raise FileNotFoundError(f"Required data file is missing: {path}")
         return pd.DataFrame()
     return pd.read_csv(path, low_memory=False)
+
+
+def _read_recruitment_csv(key: str) -> pd.DataFrame:
+    path = OUTPUTS / RECRUITMENT_FILES[key]
+    if not path.exists():
+        raise FileNotFoundError(f"Recruitment evidence file is missing: {path}")
+    frame = pd.read_csv(path, low_memory=False)
+    missing = sorted(RECRUITMENT_REQUIRED_COLUMNS[key].difference(frame.columns))
+    if missing:
+        raise ValueError(f"{path.name} is missing required columns: {', '.join(missing)}")
+    if frame.duplicated().any():
+        raise ValueError(f"{path.name} contains duplicate rows.")
+    if key != "unresolved" and frame.empty:
+        raise ValueError(f"{path.name} is unexpectedly empty.")
+    return frame.fillna("")
 
 
 @lru_cache(maxsize=1)
@@ -181,4 +217,79 @@ def get_shot_data(venue_id: str | None = None) -> dict:
         "matches": venue_matches[
             ["match_date", "home_team", "away_team", "comp_name", "match_format", "result"]
         ].sort_values("match_date", ascending=False).to_dict("records") if selected_venue is not None else [],
+    }
+
+
+@lru_cache(maxsize=1)
+def get_recruitment_data() -> dict:
+    evidence = {key: _read_recruitment_csv(key) for key in RECRUITMENT_FILES}
+    batter = evidence["batter_candidates"].merge(
+        evidence["batter_classification"][
+            [
+                "context_key", "classification", "rr_reference_season_matches",
+                "rr_reference_contexts", "all_supplied_mapping_contexts",
+                "evidence_confidence", "auction_availability_status",
+            ]
+        ],
+        on="context_key", how="left", validate="one_to_one",
+    )
+    bowler = evidence["bowler_candidates"].merge(
+        evidence["bowler_classification"][
+            [
+                "context_key", "classification", "rr_reference_season_matches",
+                "rr_reference_contexts", "all_supplied_mapping_contexts",
+                "evidence_confidence", "auction_availability_status",
+            ]
+        ],
+        on="context_key", how="left", validate="one_to_one",
+    )
+    candidates = pd.concat([batter, bowler], ignore_index=True, sort=False).fillna("")
+    candidates["candidate_key"] = (
+        candidates["role"].astype(str) + ":" + candidates["context_key"].astype(str)
+    )
+    if candidates["classification"].eq("").any():
+        raise ValueError("A candidate is missing its Step 4C classification.")
+    if candidates["candidate_key"].duplicated().any():
+        raise ValueError("Recruitment candidates are duplicated at role/context grain.")
+
+    data = _data()
+    competitions = data["competitions"]
+    matches = data["matches"].merge(
+        competitions[["comp_id", "season"]],
+        on="comp_id", how="left", validate="many_to_one",
+    )
+    reference_season = str(evidence["squad"]["season"].astype(str).iloc[0])
+    rr_matches = matches[
+        (matches["home_team_id"].eq(3) | matches["away_team_id"].eq(3))
+        & matches["season"].astype(str).eq(reference_season)
+    ]["match_id"].nunique()
+
+    def records(frame: pd.DataFrame) -> list[dict]:
+        return frame.to_dict("records")
+
+    classification_counts = candidates["classification"].value_counts().to_dict()
+    return {
+        "overview": {
+            "reference_season": reference_season,
+            "rr_team_id": 3,
+            "rr_matches": int(rr_matches),
+            "rr_participants": int(evidence["squad"]["player_id"].nunique()),
+            "candidate_contexts": len(candidates),
+            "rr_candidate_contexts": int(candidates["classification"].eq("RR_REFERENCE_SEASON_PARTICIPANT").sum()),
+            "external_candidate_contexts": int(candidates["classification"].eq("EXTERNAL_HISTORICAL_CANDIDATE").sum()),
+            "external_unique_players": int(evidence["external"]["player_id"].nunique()),
+            "unresolved_contexts": int(candidates["classification"].eq("STATUS_UNRESOLVED").sum()),
+            "classification_counts": classification_counts,
+        },
+        "candidates": records(candidates.sort_values(["classification", "role", "player_name", "context_key"])),
+        "squad": records(evidence["squad"].sort_values(["player_name", "player_id"])),
+        "external": records(evidence["external"].sort_values(["role", "player_name"])),
+        "limitations": [
+            "Historical team context is not proof of 2027 auction availability.",
+            "IPL 2026 is the latest supplied RR reference season, not confirmation of the 2027 squad.",
+            "Roles are not verified for recruitment planning.",
+            "Retention, release, auction-pool, budget, overseas-slot, and squad-need fields are not supplied.",
+            "Bowler economy and conceded runs remain unavailable.",
+            "chase_baseline is an inferred chase-context proxy, not measured psychological pressure.",
+        ],
     }

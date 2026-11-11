@@ -5,9 +5,22 @@ from pathlib import Path
 from flask import Flask, jsonify, render_template, request
 
 try:
-    from .data_service import get_dashboard_data, get_player_data, get_players, get_shot_data, get_venues
+    from .data_service import (
+        get_dashboard_data,
+        get_player_data,
+        get_players,
+        get_recruitment_data,
+        get_shot_data,
+        get_venues,
+    )
 except ImportError:
-    from data_service import get_dashboard_data, get_player_data, get_players, get_shot_data, get_venues
+    from data_service import (
+        get_dashboard_data,
+        get_player_data,
+        get_recruitment_data,
+        get_shot_data,
+        get_venues,
+    )
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -43,6 +56,11 @@ def players():
 def ground():
     venue_id = request.args.get("venue_id", "")
     return render_template("ground.html", shot_data=get_shot_data(venue_id), venues=get_venues())
+
+
+@app.get("/recruitment")
+def recruitment():
+    return render_template("recruitment.html", recruitment=get_recruitment_data())
 
 
 @app.get("/api/players")

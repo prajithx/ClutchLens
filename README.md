@@ -22,6 +22,7 @@ pressure scores or player rankings.
 - `outputs/venue_match_coverage.csv` — exact source venue IDs with match/date/format coverage.
 - `outputs/ground_visualisation_field_inventory.csv` — field-level availability inventory.
 - `dashboard/` — local Flask UI for analytics, player intelligence, and Ground Explorer.
+- `/recruitment` — Step 4D RR recruitment intelligence view built from verified Step 4B/4C outputs.
 - `reports/step3c_stadium_experience_review.md` — homepage stadium scroll implementation and validation notes.
 - `reports/step3d_photorealistic_stadium_review.md` — photographic asset audit and homepage asset readiness.
 - `dashboard/static/images/stadium/` — reserved for approved local stadium and pitch photography.
@@ -39,6 +40,9 @@ python src\audit_score_semantics.py
 python src\test_metric_feasibility.py
 python src\audit_ground_capability.py
 python src\audit_player_methodology.py
+python src\build_step4b_candidate_analysis.py
+python src\build_step4c_rr_recruitment_audit.py
+python src\validate_step4d_recruitment_dashboard.py
 ```
 
 The script automatically selects the first `.zip` file in the project folder,
@@ -85,6 +89,12 @@ Launch the local UI with:
 ```powershell
 python -m flask --app dashboard.app run
 ```
+
+The Recruitment Intelligence page is available at `/recruitment`. It displays
+the latest supplied RR reference-season evidence and Step 4B candidate
+classifications. Historical team context is not treated as proof of 2027
+auction availability; roles, retention/release status, auction pool, budget,
+and squad needs remain unavailable unless supplied by an official source.
 
 Ground Explorer selections use the exact supplied `venue_id` and display
 `venue_country` only as source metadata. The supplied data has no stadium

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name }} · Recruitment intelligence{% endblock %}
+{% block content %}
+<section class="page-heading section-pad recruitment-heading">
+  <div>
+    <p class="eyebrow">04 / RECRUITMENT INTELLIGENCE</p>
+    <h1>Evidence before <em>eligibility.</em></h1>
+    <p class="page-lede">RR reference-season participation and historical candidate evidence, kept separate from unverified 2027 auction status.</p>
+  </div>
+  <span class="status-chip">STEP 4D · INTEGRATED EVIDENCE</span>
+</section>
+
+<section class="section-pad recruitment-alert">
+  <div class="callout"><span class="callout-icon">!</span><p><strong>Historical team context is not proof of 2027 auction availability.</strong> Every candidate remains <code>NOT_VERIFIED_FROM_SUPPLIED_DATA</code>.</p></div>
+</section>
+
+<section class="section-pad recruitment-overview">
+  <article class="metric-card"><span>RR reference season</span><strong>IPL {{ recruitment.overview.reference_season }}</strong><small>Latest supplied RR season</small></article>
+  <article class="metric-card"><span>RR match coverage</span><strong>{{ recruitment.overview.rr_matches }}</strong><small>Supplied RR matches</small></article>
+  <article class="metric-card"><span>Reference participants</span><strong>{{ recruitment.overview.rr_participants }}</strong><small>Played participants</small></article>
+  <article class="metric-card"><span>Candidate contexts</span><strong>{{ recruitment.overview.candidate_contexts }}</strong><small>10 batters + 10 bowlers</small></article>
+  <article class="metric-card"><span>RR candidate contexts</span><strong>{{ recruitment.overview.rr_candidate_contexts }}</strong><small>Reference-season evidence</small></article>
+  <article class="metric-card"><span>External contexts</span><strong>{{ recruitment.overview.external_candidate_contexts }}</strong><small>{{ recruitment.overview.external_unique_players }} unique player-role rows</small></article>
+  <article class="metric-card"><span>Unresolved contexts</span><strong>{{ recruitment.overview.unresolved_contexts }}</strong><small>Identity status</small></article>
+</section>
+
+<section class="section-pad recruitment-workspace">
+  <div class="recruitment-toolbar panel">
+    <div class="filter-tabs" role="tablist" aria-label="Candidate classification">
+      <button class="filter-tab active" type="button" data-recruitment-filter="all">All candidates</button>
+      <button class="filter-tab" type="button" data-recruitment-filter="RR_REFERENCE_SEASON_PARTICIPANT">RR reference-season</button>
+      <button class="filter-tab" type="button" data-recruitment-filter="EXTERNAL_HISTORICAL_CANDIDATE">External historical</button>
+      <button class="filter-tab" type="button" data-recruitment-filter="STATUS_UNRESOLVED">Unresolved</button>
+    </div>
+    <div class="recruitment-controls">
+      <label>Role
+        <select id="recruitment-role-filter">
+          <option value="all">All evidence categories</option><option value="batter">Batter</option><option value="bowler">Bowler</option>
+        </select>
+      </label>
+      <label class="recruitment-search">Search supplied name
+        <input id="recruitment-search" type="search" placeholder="Search candidates…" autocomplete="off">
+      </label>
+    </div>
+  </div>
+
+  <div id="recruitment-empty" class="empty-state recruitment-empty" hidden>
+    <span class="empty-mark">◎</span><h2>No matching evidence</h2><p>Try another classification, evidence category, or supplied player name.</p>
+  </div>
+
+  <div class="candidate-grid" id="candidate-grid">
+    {% for candidate in recruitment.candidates %}
+    <article class="candidate-card panel" data-candidate-card data-classification="{{ candidate.classification }}" data-role="{{ candidate.role }}" data-name="{{ candidate.player_name|lower }}">
+      <div class="candidate-card-top"><span class="candidate-avatar">{{ candidate.player_name[:1] }}</span><span class="status-chip">{{ candidate.classification|replace('_', ' ')|title }}</span></div>
+      <p class="eyebrow">{{ candidate.role|upper }} EVIDENCE · {{ candidate.context_key }}</p>
+      <h2>{{ candidate.player_name }}</h2>
+      <p class="candidate-context">{{ candidate.team_name }} · {{ candidate.comp_name }} · {{ candidate.season }}</p>
+      <p class="candidate-role">Recruitment role: <strong>Not verified</strong></p>
+      {% if candidate.role == "batter" %}
+      <div class="evidence-stats"><span><b>{{ "{:,}".format(candidate.pressure_events|int) }}</b>proxy events</span><span><b>{{ "{:,}".format(candidate.baseline_events|int) }}</b>baseline events</span><span><b>{{ candidate.pressure_matches|int }}</b>proxy matches</span><span><b>{{ candidate.baseline_matches|int }}</b>baseline matches</span></div>
+      {% else %}
+      <div class="evidence-stats"><span><b>{{ "{:,}".format(candidate.pressure_legal_balls|int) }}</b>proxy legal balls</span><span><b>{{ "{:,}".format(candidate.baseline_legal_balls|int) }}</b>baseline legal balls</span><span><b>{{ candidate.candidate_dismissal_events|int }}</b>candidate dismissals</span><span><b>{{ candidate.candidate_dismissal_matches|int }}</b>dismissal matches</span></div>
+      {% endif %}
+      <details class="candidate-detail"><summary>Open evidence profile</summary>
+        <dl class="evidence-list">
+          <div><dt>Source identity</dt><dd>{{ candidate.player_id }} · {{ candidate.context_key }}</dd></div>
+          <div><dt>Evidence status</dt><dd>{{ candidate.evidence_label }}</dd></div>
+          <div><dt>Classification confidence</dt><dd>{{ candidate.evidence_confidence }}</dd></div>
+          <div><dt>RR reference matches</dt><dd>{{ candidate.rr_reference_season_matches|int }}</dd></div>
+          <div><dt>Historical contexts</dt><dd>{{ candidate.all_supplied_mapping_contexts }}</dd></div>
+          <div><dt>Auction availability</dt><dd>Not verified from supplied data</dd></div>
+          <div><dt>Pressure semantics</dt><dd>{{ candidate.pressure_semantics }}</dd></div>
+        </dl>
+        <p class="micro-note">Source: Step 4B candidate output and Step 4C classification output. Conditional evidence is not a final ranking or recommendation.</p>
+      </details>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="section-pad recruitment-lower">
+  <article class="panel">
+    <div class="panel-heading"><div><p class="eyebrow">LATEST SUPPLIED REFERENCE</p><h2>RR participants in IPL {{ recruitment.overview.reference_season }}</h2></div></div>
+    <p class="micro-note">Playing-XI participation evidence only. This is not a confirmed 2027 squad or retention list.</p>
+    <div class="squad-table-wrap"><table class="evidence-table"><thead><tr><th>Player</th><th>Matches</th><th>Evidence role</th><th>Confidence</th><th>Availability</th></tr></thead><tbody>
+      {% for player in recruitment.squad %}<tr><td><strong>{{ player.player_name }}</strong><small>ID {{ player.player_id }}</small></td><td>{{ player.matches_represented|int }}</td><td>{{ player.role|replace('_', ' ')|title }}</td><td>{{ player.evidence_confidence }}</td><td>Not verified</td></tr>{% endfor %}
+    </tbody></table></div>
+  </article>
+  <article class="panel">
+    <div class="panel-heading"><div><p class="eyebrow">EXTERNAL HISTORICAL POOL</p><h2>Availability not verified.</h2></div></div>
+    <p class="micro-note">Non-RR historical contexts are preserved without implying release, retention, or auction entry.</p>
+    <div class="external-list">{% for player in recruitment.external %}<div><b>{{ player.player_name }}</b><span>{{ player.role|title }} · {{ player.historical_context_count }} context{{ "s" if player.historical_context_count != 1 else "" }}</span><small>{{ player.historical_teams }} · {{ player.historical_competitions }}</small></div>{% endfor %}</div>
+  </article>
+</section>
+
+<section class="section-pad methodology-panel">
+  <article class="panel">
+    <p class="eyebrow">HOW TO READ THIS ANALYSIS</p><h2>Signals, not assumptions.</h2>
+    <div class="methodology-columns">{% for limitation in recruitment.limitations %}<p><span>↳</span>{{ limitation }}</p>{% endfor %}</div>
+  </article>
+</section>
+{% endblock %}

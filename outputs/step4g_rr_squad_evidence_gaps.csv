@@ -1,0 +1,13 @@
+evidence_item,verified_fact,repository_evidence,status,limitation,authoritative_verification_needed
+RR reference-season participants,20 played participants in supplied IPL 2026 reference-season evidence,outputs/step4c_rr_squad_evidence.csv,SUPPORTED_WITH_CAVEATS,Does not prove current 2027 squad membership,official 2027 RR roster
+RR reference-season match coverage,16 RR matches represented in supplied IPL 2026 reference evidence,matches.csv + competitions.csv + Step 4C,SUPPORTED_WITH_CAVEATS,Supplied cutoff only,official season roster and schedule
+historical external candidates,16 unique external player-role rows in Step 4C pool,outputs/step4c_external_candidate_pool.csv,SUPPORTED_WITH_CAVEATS,Historical context is not availability,official auction registration/release list
+unresolved candidate contexts,0 unresolved Step 4C candidate rows in existing audit,outputs/step4c_unresolved_status.csv,SUPPORTED_WITH_CAVEATS,No unresolved row does not establish completeness,authoritative identity master
+current official squad,Not supplied,No official current-roster file,BLOCKED,Historical participation cannot substitute,official RR announcement/league roster
+retained players,Not supplied,No retention list,BLOCKED,Cannot infer from reference participation,official retention announcement
+released players,Not supplied,No release list,BLOCKED,Cannot infer from external classification,official release/auction document
+registered auction candidates,Not supplied,No auction registration list,BLOCKED,External pool is not auction pool,official auction registration list
+player roles,Step 4C records roles as unknown/not inferred where unsupported,step4c classification outputs,BLOCKED,Do not infer role from event presence,official squad profiles or role feed
+overseas status/slots,Not supplied,No nationality/slot fields,BLOCKED,Cannot infer slot constraints,official league regulations and roster
+budget/purse,Not supplied,No budget field,BLOCKED,No financial fit analysis,official auction purse/team statement
+squad gaps/needs,Not supplied,No requirement brief,BLOCKED,No role-gap recommendation,RR recruitment brief or authorised analyst input

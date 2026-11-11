@@ -50,6 +50,8 @@ RECRUITMENT_REQUIRED_COLUMNS = {
     "unresolved": {"classification_key"},
 }
 
+RECRUITMENT_CONTEXT_KEY = ["comp_id", "team_id", "player_id"]
+
 
 def _read_csv(name: str, required: bool = True) -> pd.DataFrame:
     path = RAW / name
@@ -72,6 +74,17 @@ def _read_recruitment_csv(key: str) -> pd.DataFrame:
         raise ValueError(f"{path.name} contains duplicate rows.")
     if key != "unresolved" and frame.empty:
         raise ValueError(f"{path.name} is unexpectedly empty.")
+    if key in {"batter_candidates", "bowler_candidates", "batter_classification", "bowler_classification"}:
+        missing_identity = frame[RECRUITMENT_CONTEXT_KEY].isna().any(axis=1)
+        if missing_identity.any():
+            raise ValueError(f"{path.name} contains a blank contextual identity key.")
+        if frame["context_key"].duplicated().any():
+            raise ValueError(f"{path.name} contains duplicate context_key values.")
+    required_nonblank = RECRUITMENT_REQUIRED_COLUMNS[key].intersection(frame.columns)
+    if frame[list(required_nonblank)].isna().any().any():
+        raise ValueError(f"{path.name} contains null required fields.")
+    if frame[list(required_nonblank)].astype(str).apply(lambda column: column.str.strip().eq("")).any().any():
+        raise ValueError(f"{path.name} contains blank required fields.")
     return frame.fillna("")
 
 
@@ -228,7 +241,7 @@ def get_recruitment_data() -> dict:
             [
                 "context_key", "classification", "rr_reference_season_matches",
                 "rr_reference_contexts", "all_supplied_mapping_contexts",
-                "evidence_confidence", "auction_availability_status",
+                "evidence_confidence", "auction_availability_status", "role_basis",
             ]
         ],
         on="context_key", how="left", validate="one_to_one",
@@ -238,7 +251,7 @@ def get_recruitment_data() -> dict:
             [
                 "context_key", "classification", "rr_reference_season_matches",
                 "rr_reference_contexts", "all_supplied_mapping_contexts",
-                "evidence_confidence", "auction_availability_status",
+                "evidence_confidence", "auction_availability_status", "role_basis",
             ]
         ],
         on="context_key", how="left", validate="one_to_one",
@@ -251,6 +264,42 @@ def get_recruitment_data() -> dict:
         raise ValueError("A candidate is missing its Step 4C classification.")
     if candidates["candidate_key"].duplicated().any():
         raise ValueError("Recruitment candidates are duplicated at role/context grain.")
+    candidates["context_identity"] = (
+        "competition " + candidates["comp_id"].astype(str)
+        + " · team " + candidates["team_id"].astype(str)
+        + " · player " + candidates["player_id"].astype(str)
+    )
+    candidates["player_context_count"] = candidates.groupby(
+        ["role", "player_id"]
+    )["context_key"].transform("nunique")
+    candidates["role_status"] = candidates["role_basis"].replace(
+        "", "UNKNOWN_NOT_INFERRED"
+    )
+    candidates["source_category"] = "Step 4B contextual evidence + Step 4C classification"
+    candidates["source_lineage"] = (
+        "outputs/step4b_"
+        + candidates["role"].astype(str)
+        + "_candidates.csv; outputs/step4c_"
+        + candidates["role"].astype(str)
+        + "_classification.csv"
+    )
+    candidates["evidence_gate_summary"] = candidates.apply(
+        lambda row: (
+            f"{row['evidence_label']}; pressure/chase events or legal balls "
+            f"{row['pressure_events'] if row['role'] == 'batter' else row['pressure_legal_balls']}; "
+            f"baseline events or legal balls "
+            f"{row['baseline_events'] if row['role'] == 'batter' else row['baseline_legal_balls']}"
+        ),
+        axis=1,
+    )
+    candidates["supported_metric_summary"] = candidates["role"].map({
+        "batter": "Conditional observed runs, eligible deliveries, source boundary flags, sample coverage",
+        "bowler": "Legal balls, conservative dot events, candidate dismissal events by type, sample coverage",
+    })
+    candidates["unavailable_metric_summary"] = candidates["role"].map({
+        "batter": "Batting average, official strike rate, verified dot percentage, validated pressure rating",
+        "bowler": "Conceded runs, economy, official wickets, validated dot percentage, validated pressure rating",
+    })
 
     data = _data()
     competitions = data["competitions"]
@@ -279,6 +328,8 @@ def get_recruitment_data() -> dict:
             "external_candidate_contexts": int(candidates["classification"].eq("EXTERNAL_HISTORICAL_CANDIDATE").sum()),
             "external_unique_players": int(evidence["external"]["player_id"].nunique()),
             "unresolved_contexts": int(candidates["classification"].eq("STATUS_UNRESOLVED").sum()),
+            "candidate_players": int(candidates["player_id"].nunique()),
+            "role_counts": candidates["role"].value_counts().to_dict(),
             "classification_counts": classification_counts,
         },
         "candidates": records(candidates.sort_values(["classification", "role", "player_name", "context_key"])),
@@ -292,4 +343,16 @@ def get_recruitment_data() -> dict:
             "Bowler economy and conceded runs remain unavailable.",
             "chase_baseline is an inferred chase-context proxy, not measured psychological pressure.",
         ],
+        "comparison_definitions": {
+            "batter": [
+                {"key": "baseline_runs_conditional", "label": "Conditional observed runs", "unit": "source run units", "basis": "Step 4B strict conditional rows", "caveat": "Runs field is not formally labelled official batter runs; raw total is volume-sensitive."},
+                {"key": "baseline_events", "label": "Eligible deliveries", "unit": "deliveries", "basis": "Step 4B strict eligible delivery policy", "caveat": "Conditional denominator; not a complete scorecard ball count."},
+                {"key": "baseline_boundary_events", "label": "Source boundary events", "unit": "events", "basis": "Source is_four/is_six flags", "caveat": "Descriptive only; not a complete tournament boundary rate."},
+            ],
+            "bowler": [
+                {"key": "baseline_legal_balls", "label": "Legal balls", "unit": "balls", "basis": "Step 4B legal-ball policy", "caveat": "Other-extra legal status remains a caveat."},
+                {"key": "baseline_safe_dot_events", "label": "Conservative dot events", "unit": "events", "basis": "Step 4B safe-dot policy", "caveat": "Not an official dot-ball rate."},
+                {"key": "candidate_dismissal_events", "label": "Candidate dismissal events", "unit": "events", "basis": "Bowled/Caught/LBW/Stump/Hit Wicket event filter", "caveat": "Candidate events are not official wickets."},
+            ],
+        },
     }

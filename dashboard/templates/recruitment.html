@@ -5,77 +5,123 @@
   <div>
     <p class="eyebrow">04 / RECRUITMENT INTELLIGENCE</p>
     <h1>Evidence before <em>eligibility.</em></h1>
-    <p class="page-lede">RR reference-season participation and historical candidate evidence, kept separate from unverified 2027 auction status.</p>
+    <p class="page-lede">Evidence-led scouting workspace — not an auction availability list. Candidate contexts remain distinct and human review controls every shortlist action.</p>
   </div>
-  <span class="status-chip">STEP 4D · INTEGRATED EVIDENCE</span>
+  <span class="status-chip">STEP 4F · HUMAN-REVIEW WORKSPACE</span>
 </section>
 
 <section class="section-pad recruitment-alert">
-  <div class="callout"><span class="callout-icon">!</span><p><strong>Historical team context is not proof of 2027 auction availability.</strong> Every candidate remains <code>NOT_VERIFIED_FROM_SUPPLIED_DATA</code>.</p></div>
+  <div class="callout"><span class="callout-icon">!</span><p><strong>Auction availability is not verified by the supplied data.</strong> Every candidate remains <code>NOT_VERIFIED_FROM_SUPPLIED_DATA</code>.</p></div>
 </section>
 
-<section class="section-pad recruitment-overview">
-  <article class="metric-card"><span>RR reference season</span><strong>IPL {{ recruitment.overview.reference_season }}</strong><small>Latest supplied RR season</small></article>
-  <article class="metric-card"><span>RR match coverage</span><strong>{{ recruitment.overview.rr_matches }}</strong><small>Supplied RR matches</small></article>
-  <article class="metric-card"><span>Reference participants</span><strong>{{ recruitment.overview.rr_participants }}</strong><small>Played participants</small></article>
-  <article class="metric-card"><span>Candidate contexts</span><strong>{{ recruitment.overview.candidate_contexts }}</strong><small>10 batters + 10 bowlers</small></article>
-  <article class="metric-card"><span>RR candidate contexts</span><strong>{{ recruitment.overview.rr_candidate_contexts }}</strong><small>Reference-season evidence</small></article>
+<section class="section-pad recruitment-overview" aria-label="Recruitment evidence overview">
+  <article class="metric-card"><span>Candidate contexts</span><strong>{{ recruitment.overview.candidate_contexts }}</strong><small>{{ recruitment.overview.candidate_players }} unique supplied player IDs</small></article>
+  <article class="metric-card"><span>Batter contexts</span><strong>{{ recruitment.overview.role_counts.get("batter", 0) }}</strong><small>Evidence-selected contexts</small></article>
+  <article class="metric-card"><span>Bowler contexts</span><strong>{{ recruitment.overview.role_counts.get("bowler", 0) }}</strong><small>Evidence-selected contexts</small></article>
+  <article class="metric-card"><span>RR reference contexts</span><strong>{{ recruitment.overview.rr_candidate_contexts }}</strong><small>{{ recruitment.overview.rr_participants }} IPL {{ recruitment.overview.reference_season }} participants</small></article>
   <article class="metric-card"><span>External contexts</span><strong>{{ recruitment.overview.external_candidate_contexts }}</strong><small>{{ recruitment.overview.external_unique_players }} unique player-role rows</small></article>
   <article class="metric-card"><span>Unresolved contexts</span><strong>{{ recruitment.overview.unresolved_contexts }}</strong><small>Identity status</small></article>
 </section>
 
+<section class="section-pad shortlist-dock" aria-label="Shortlist quick access">
+  <div class="shortlist-dock-inner">
+    <div class="shortlist-dock-mark">SHORTLIST</div>
+    <div class="shortlist-dock-copy">
+      <strong>Shortlisted Players</strong>
+      <span>Human-reviewed working set · browser-local</span>
+    </div>
+    <div class="shortlist-dock-stats"><b id="shortlist-dock-count">0</b><span>selected</span><b id="shortlist-dock-batters">0</b><span>batters</span><b id="shortlist-dock-bowlers">0</b><span>bowlers</span></div>
+    <button class="button button-primary button-small" id="shortlist-jump" type="button">View shortlist</button>
+  </div>
+</section>
+
 <section class="section-pad recruitment-workspace">
   <div class="recruitment-toolbar panel">
-    <div class="filter-tabs" role="tablist" aria-label="Candidate classification">
-      <button class="filter-tab active" type="button" data-recruitment-filter="all">All candidates</button>
-      <button class="filter-tab" type="button" data-recruitment-filter="RR_REFERENCE_SEASON_PARTICIPANT">RR reference-season</button>
-      <button class="filter-tab" type="button" data-recruitment-filter="EXTERNAL_HISTORICAL_CANDIDATE">External historical</button>
-      <button class="filter-tab" type="button" data-recruitment-filter="STATUS_UNRESOLVED">Unresolved</button>
+    <div>
+      <p class="eyebrow">CANDIDATE DISCOVERY</p>
+      <h2>Browse supplied evidence</h2>
+      <p class="micro-note">The result count is contextual rows, not a player ranking.</p>
     </div>
     <div class="recruitment-controls">
+      <label>Classification
+        <select id="recruitment-classification-filter">
+          <option value="all">All classifications</option>
+          <option value="RR_REFERENCE_SEASON_PARTICIPANT">RR reference-season participant</option>
+          <option value="EXTERNAL_HISTORICAL_CANDIDATE">External historical candidate</option>
+          <option value="STATUS_UNRESOLVED">Unresolved</option>
+        </select>
+      </label>
       <label>Role
         <select id="recruitment-role-filter">
-          <option value="all">All evidence categories</option><option value="batter">Batter</option><option value="bowler">Bowler</option>
+          <option value="all">All supported roles</option>
+          <option value="batter">Batter</option>
+          <option value="bowler">Bowler</option>
+          <option value="UNKNOWN_NOT_INFERRED">Unknown / not inferred</option>
+        </select>
+      </label>
+      <label>Evidence status
+        <select id="recruitment-evidence-filter">
+          <option value="all">All evidence statuses</option>
+          <option value="provisional data-supported candidate">Provisional data-supported candidate</option>
         </select>
       </label>
       <label class="recruitment-search">Search supplied name
-        <input id="recruitment-search" type="search" placeholder="Search candidates…" autocomplete="off">
+        <input id="recruitment-search" type="search" placeholder="Search candidates..." autocomplete="off">
       </label>
+      <button class="button button-muted" id="recruitment-reset" type="button">Reset filters</button>
     </div>
   </div>
 
+  <div class="recruitment-results-bar"><span id="recruitment-result-count">0 contexts</span><span id="recruitment-filter-note">No ranking or score is calculated.</span></div>
   <div id="recruitment-empty" class="empty-state recruitment-empty" hidden>
-    <span class="empty-mark">◎</span><h2>No matching evidence</h2><p>Try another classification, evidence category, or supplied player name.</p>
+    <span class="empty-mark">◎</span><h2>No matching evidence</h2><p>Try another classification, role, evidence status, or supplied player name.</p>
   </div>
 
   <div class="candidate-grid" id="candidate-grid">
     {% for candidate in recruitment.candidates %}
-    <article class="candidate-card panel" data-candidate-card data-classification="{{ candidate.classification }}" data-role="{{ candidate.role }}" data-name="{{ candidate.player_name|lower }}">
-      <div class="candidate-card-top"><span class="candidate-avatar">{{ candidate.player_name[:1] }}</span><span class="status-chip">{{ candidate.classification|replace('_', ' ')|title }}</span></div>
-      <p class="eyebrow">{{ candidate.role|upper }} EVIDENCE · {{ candidate.context_key }}</p>
+    <article class="candidate-card panel" data-candidate-card data-candidate-key="{{ candidate.candidate_key }}" data-classification="{{ candidate.classification }}" data-role="{{ candidate.role }}" data-evidence="{{ candidate.evidence_label }}" data-name="{{ candidate.player_name|lower }}">
+      <div class="candidate-card-top">
+        <label class="compare-toggle"><input type="checkbox" data-compare-check aria-label="Select {{ candidate.player_name }} for comparison"><span>Compare</span></label>
+        <span class="status-chip">{{ candidate.classification|replace('_', ' ')|title }}</span>
+      </div>
+      <p class="eyebrow">{{ candidate.role|upper }} CONTEXT · {{ candidate.context_key }}</p>
       <h2>{{ candidate.player_name }}</h2>
-      <p class="candidate-context">{{ candidate.team_name }} · {{ candidate.comp_name }} · {{ candidate.season }}</p>
-      <p class="candidate-role">Recruitment role: <strong>Not verified</strong></p>
-      {% if candidate.role == "batter" %}
-      <div class="evidence-stats"><span><b>{{ "{:,}".format(candidate.pressure_events|int) }}</b>proxy events</span><span><b>{{ "{:,}".format(candidate.baseline_events|int) }}</b>baseline events</span><span><b>{{ candidate.pressure_matches|int }}</b>proxy matches</span><span><b>{{ candidate.baseline_matches|int }}</b>baseline matches</span></div>
-      {% else %}
-      <div class="evidence-stats"><span><b>{{ "{:,}".format(candidate.pressure_legal_balls|int) }}</b>proxy legal balls</span><span><b>{{ "{:,}".format(candidate.baseline_legal_balls|int) }}</b>baseline legal balls</span><span><b>{{ candidate.candidate_dismissal_events|int }}</b>candidate dismissals</span><span><b>{{ candidate.candidate_dismissal_matches|int }}</b>dismissal matches</span></div>
-      {% endif %}
-      <details class="candidate-detail"><summary>Open evidence profile</summary>
-        <dl class="evidence-list">
-          <div><dt>Source identity</dt><dd>{{ candidate.player_id }} · {{ candidate.context_key }}</dd></div>
-          <div><dt>Evidence status</dt><dd>{{ candidate.evidence_label }}</dd></div>
-          <div><dt>Classification confidence</dt><dd>{{ candidate.evidence_confidence }}</dd></div>
-          <div><dt>RR reference matches</dt><dd>{{ candidate.rr_reference_season_matches|int }}</dd></div>
-          <div><dt>Historical contexts</dt><dd>{{ candidate.all_supplied_mapping_contexts }}</dd></div>
-          <div><dt>Auction availability</dt><dd>Not verified from supplied data</dd></div>
-          <div><dt>Pressure semantics</dt><dd>{{ candidate.pressure_semantics }}</dd></div>
-        </dl>
-        <p class="micro-note">Source: Step 4B candidate output and Step 4C classification output. Conditional evidence is not a final ranking or recommendation.</p>
-      </details>
+      <p class="candidate-context">{{ candidate.team_name }} · {{ candidate.comp_name }} · {{ candidate.season }} · {{ candidate.match_format }}</p>
+      <p class="candidate-role">Role evidence: <strong>{{ candidate.role_status|replace('_', ' ')|title }}</strong></p>
+      <div class="evidence-stats">
+        {% if candidate.role == "batter" %}
+        <span><b>{{ "{:,}".format(candidate.pressure_events|int) }}</b>proxy events</span><span><b>{{ "{:,}".format(candidate.baseline_events|int) }}</b>baseline events</span><span><b>{{ candidate.pressure_matches|int }}</b>proxy matches</span>
+        {% else %}
+        <span><b>{{ "{:,}".format(candidate.pressure_legal_balls|int) }}</b>proxy legal balls</span><span><b>{{ "{:,}".format(candidate.baseline_legal_balls|int) }}</b>baseline legal balls</span><span><b>{{ candidate.candidate_dismissal_events|int }}</b>candidate dismissals</span>
+        {% endif %}
+      </div>
+      <p class="evidence-label">{{ candidate.evidence_gate_summary }}</p>
+      <div class="candidate-actions"><button class="button button-small" type="button" data-detail-button>Open evidence profile</button><button class="button button-small button-muted" type="button" data-shortlist-button>Add to working shortlist</button></div>
     </article>
     {% endfor %}
   </div>
+</section>
+
+<section class="section-pad recruitment-tools">
+  <article class="panel detail-panel" id="candidate-detail-panel" hidden>
+    <div class="panel-heading"><div><p class="eyebrow">CANDIDATE DETAIL</p><h2 id="candidate-detail-title">Select a candidate context</h2></div><button class="button button-small button-muted" id="close-detail" type="button">Close</button></div>
+    <div id="candidate-detail-content" class="detail-content"></div>
+  </article>
+
+  <article class="panel comparison-panel" id="comparison-panel">
+    <div class="panel-heading"><div><p class="eyebrow">SIDE-BY-SIDE REVIEW</p><h2>Compare selected contexts</h2></div><span class="status-chip" id="comparison-count">0 selected</span></div>
+    <p class="micro-note">Select two or more contexts above. Comparison never declares a winner and never combines batter and bowler metrics.</p>
+    <div id="comparison-empty" class="empty-state compact-empty"><p>No contexts selected for comparison.</p></div>
+    <div id="comparison-content" hidden></div>
+  </article>
+
+  <article class="panel shortlist-panel" id="shortlist-panel">
+    <div class="panel-heading"><div><p class="eyebrow">SHORTLISTED PLAYERS</p><h2>Human-reviewed working shortlist</h2><p class="micro-note">Actual selected contextual records, grouped by supported role.</p></div><span class="status-chip" id="shortlist-count">0 selected</span></div>
+    <div class="shortlist-actions"><button class="button button-small button-muted" id="shortlist-export" type="button">Export visible CSV</button><button class="button button-small button-muted" id="shortlist-print" type="button">Print shortlist</button><button class="button button-small button-danger" id="shortlist-clear" type="button">Clear shortlist</button></div>
+    <p class="micro-note">Human-reviewed working shortlist; not an auction availability confirmation or performance ranking. Stored only in this browser.</p>
+    <div id="shortlist-empty" class="empty-state compact-empty"><p>Add candidate contexts for human review. Distinct contexts are preserved.</p></div>
+    <div id="shortlist-content" hidden></div>
+  </article>
 </section>
 
 <section class="section-pad recruitment-lower">
@@ -99,4 +145,6 @@
     <div class="methodology-columns">{% for limitation in recruitment.limitations %}<p><span>↳</span>{{ limitation }}</p>{% endfor %}</div>
   </article>
 </section>
+<script id="recruitment-data" type="application/json">{{ recruitment.candidates|tojson }}</script>
+<script id="recruitment-comparison-definitions" type="application/json">{{ recruitment.comparison_definitions|tojson }}</script>
 {% endblock %}

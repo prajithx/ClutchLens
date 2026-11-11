@@ -43,6 +43,7 @@ python src\audit_player_methodology.py
 python src\build_step4b_candidate_analysis.py
 python src\build_step4c_rr_recruitment_audit.py
 python src\validate_step4d_recruitment_dashboard.py
+python src\validate_step4f_recruitment_intelligence.py
 ```
 
 The script automatically selects the first `.zip` file in the project folder,
@@ -92,9 +93,12 @@ python -m flask --app dashboard.app run
 
 The Recruitment Intelligence page is available at `/recruitment`. It displays
 the latest supplied RR reference-season evidence and Step 4B candidate
-classifications. Historical team context is not treated as proof of 2027
+classifications. It provides contextual discovery filters, evidence detail
+profiles, same-role side-by-side comparison, and a browser-local human
+working shortlist. Historical team context is not treated as proof of 2027
 auction availability; roles, retention/release status, auction pool, budget,
 and squad needs remain unavailable unless supplied by an official source.
+The shortlist is a human review queue, not a ranking or recommendation.
 
 Ground Explorer selections use the exact supplied `venue_id` and display
 `venue_country` only as source metadata. The supplied data has no stadium

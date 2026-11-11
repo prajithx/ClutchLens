@@ -38,6 +38,7 @@ python src\validate_match_context.py
 python src\audit_score_semantics.py
 python src\test_metric_feasibility.py
 python src\audit_ground_capability.py
+python src\audit_player_methodology.py
 ```
 
 The script automatically selects the first `.zip` file in the project folder,
@@ -69,6 +70,14 @@ without producing ratings or rankings:
 
 ```powershell
 python src\test_metric_feasibility.py
+```
+
+The Step 4A player methodology audit creates metric feasibility, join quality,
+pressure-context coverage, and sample-threshold outputs without ranking
+players:
+
+```powershell
+python src\audit_player_methodology.py
 ```
 
 Launch the local UI with:

@@ -39,7 +39,7 @@
 .photo-sticky{background:#07091a;height:100vh;overflow:hidden;position:sticky;top:0}
 .photo-fallback{background:radial-gradient(ellipse at 50% 70%,#1c2941 0%,#10152c 39%,#060714 78%);inset:0;position:absolute}
 .photo-layer{height:100%;inset:0;object-fit:cover;position:absolute;width:100%;z-index:1}
-.photo-wide{object-position:center center;opacity:calc(1 - var(--journey-progress) * 1.15);transform:scale(calc(1 + var(--journey-progress) * .18));transform-origin:center 65%}
+.photo-wide{object-position:center center;opacity:clamp(0,calc(1 - var(--journey-progress) * 1.15),1);transform:scale(calc(1 + var(--journey-progress) * .18));transform-origin:center 65%}
 .photo-stands{object-position:center 55%;opacity:clamp(0,calc((var(--journey-progress) - .22) * 2.4),1);transform:scale(calc(1.08 + var(--journey-progress) * .3));transform-origin:center 58%}
 .photo-pitch{object-position:center 60%;opacity:clamp(0,calc((var(--journey-progress) - .58) * 2.4),1);transform:scale(calc(1.05 + var(--journey-progress) * .2));transform-origin:center 70%}
 .photo-layer[hidden]{display:none}

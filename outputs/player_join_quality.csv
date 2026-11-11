@@ -1,0 +1,6 @@
+join_name,source_rows,source_key,target_rows,target_key,matched_source_rows,unmatched_source_rows,target_duplicate_key_rows,row_multiplication_risk,notes
+ball_to_matches,200999,match_id,883,match_id,200999,0,0,LOW,Mapping is contextual by competition/team; aggregate distinct contexts before joining.
+matches_to_competitions,883,comp_id,141,comp_id,883,0,0,LOW,Mapping is contextual by competition/team; aggregate distinct contexts before joining.
+striker_ids_to_mapping,200999,striker_id,6413,player_id,200999,0,5196,HIGH,Mapping is contextual by competition/team; aggregate distinct contexts before joining.
+bowler_ids_to_mapping,200999,bowler_id,6413,player_id,200999,0,5196,HIGH,Mapping is contextual by competition/team; aggregate distinct contexts before joining.
+mapping_exact_duplicate_rows,6413,all_columns,6413,all_columns,6413,0,0,LOW,Exact duplicates may be de-duplicated for identity lookup only; valid team/competition contexts are retained.

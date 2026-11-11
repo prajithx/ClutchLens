@@ -1,0 +1,11 @@
+role,metric,formula,source_fields,confidence,eligible_deliveries_or_events,eligible_innings,eligible_matches,unique_players,limitation
+batter,runs,sum(runs) on strict eligible striker rows,"runs, extras_type, extras_2_runs",MEDIUM,175062,1561,838,886,runs resembles batter runs but is not explicitly labelled; conditional only
+batter,eligible balls faced,count strict eligible striker rows,"striker_id, extras_type, extras_2_runs",MEDIUM,175062,1561,838,886,not a complete scorecard ball count
+batter,boundary flags,"sum(is_four), sum(is_six) after consistency audit","is_four, is_six, runs",MEDIUM,175062,1561,838,886,source flags are descriptive and checked against runs
+batter,strike rate,100 * sum(runs) / count(strict eligible striker rows),"runs, striker_id, extras_type, extras_2_runs",LOW,175062,1561,838,886,"conditional delivery rate, not a complete scorecard strike rate"
+batter,dismissal/survival events,dismissed_player_id plus filtered dismissal types,"is_wicket, dismissed_player_id, dismissal_type",MEDIUM,10606,1708,865,805,dismissal types and non-striker/run-out handling must remain explicit
+batter,pressure vs baseline,compare strict metric aggregates under declared context flags,delivery_context pressure fields plus batter fields,EXPLORATORY,17990,515,515,609,pressure context and target reconstruction remain provisional
+bowler,legal balls,count legal_ball after excluding wide and Overstep,"extras_type, legal_ball, bowler_id",MEDIUM,178297,1561,838,639,other extra legal status remains a caveat
+bowler,conservative dot events,strict eligible legal rows with runs == 0,"legal_ball, runs, extras_type, bowler_id",MEDIUM,63052,1561,838,626,does not claim unresolved extras are batter dots
+bowler,candidate bowler wickets,count Bowled/Caught/LBW/Stump/Hit Wicket only,"dismissal_type, is_wicket, bowler_id",MEDIUM,9618,1553,838,549,"RunOut, Retire Out, and obstruction events excluded"
+bowler,runs conceded/economy,not calculated,no verified bowler-charge field,BLOCKED,0,0,0,0,cannot reliably attribute batter runs/extras to bowler

@@ -1,0 +1,7 @@
+pressure_definition,formula,eligible_deliveries,eligible_innings,eligible_matches,unique_batters,unique_bowlers,excluded_target_or_incomplete_rows,caveat
+baseline,"ordinary valid innings, excluding abandoned/no-result",185945,1561,838,887,639,15054,Observed context only; score and target semantics remain provisional.
+chase_baseline,"valid chase, target not reached, <=48 balls, RRR>=10 or (RRR-CRR>=3 and <=6 wickets in hand)",19447,516,516,611,384,181552,Observed context only; score and target semantics remain provisional.
+general_baseline,"valid innings, target not reached, <=36 balls, <=6 wickets in hand or <=36 runs required in chase",19155,676,676,627,433,181844,Observed context only; score and target semantics remain provisional.
+chase_strict,chase baseline with <=30 balls and RRR>=12 or RRR-CRR>=4,10564,452,452,537,328,190435,Observed context only; score and target semantics remain provisional.
+general_strict,general baseline with <=24 balls and <=24 runs required for chase branch,12166,626,626,573,377,188833,Observed context only; score and target semantics remain provisional.
+chase_loose,chase baseline with <=60 balls and RRR>=8 or RRR-CRR>=2,29571,582,582,670,431,171428,Observed context only; score and target semantics remain provisional.

@@ -1,64 +1,19 @@
-category,policy,pressure_definition,minimum_pressure_events,minimum_pressure_matches,minimum_baseline_events,qualifying_players,observed_players
-batter,strict,baseline,10,3,30,525,886
-batter,strict,baseline,20,5,60,388,886
-batter,strict,baseline,30,8,90,304,886
-batter,strict,chase_baseline,10,3,30,261,609
-batter,strict,chase_baseline,20,5,60,151,609
-batter,strict,chase_baseline,30,8,90,86,609
-batter,strict,chase_stricter,10,3,30,180,535
-batter,strict,chase_stricter,20,5,60,92,535
-batter,strict,chase_stricter,30,8,90,48,535
-batter,strict,chase_looser,10,3,30,306,668
-batter,strict,chase_looser,20,5,60,209,668
-batter,strict,chase_looser,30,8,90,124,668
-batter,strict,general_baseline,10,3,30,266,625
-batter,strict,general_baseline,20,5,60,166,625
-batter,strict,general_baseline,30,8,90,90,625
-batter,strict,general_stricter,10,3,30,216,571
-batter,strict,general_stricter,20,5,60,122,571
-batter,strict,general_stricter,30,8,90,62,571
-batter,strict,general_looser,10,3,30,292,649
-batter,strict,general_looser,20,5,60,186,649
-batter,strict,general_looser,30,8,90,117,649
-batter,moderate,baseline,10,3,30,526,886
-batter,moderate,baseline,20,5,60,388,886
-batter,moderate,baseline,30,8,90,304,886
-batter,moderate,chase_baseline,10,3,30,261,609
-batter,moderate,chase_baseline,20,5,60,151,609
-batter,moderate,chase_baseline,30,8,90,86,609
-batter,moderate,chase_stricter,10,3,30,180,535
-batter,moderate,chase_stricter,20,5,60,92,535
-batter,moderate,chase_stricter,30,8,90,48,535
-batter,moderate,chase_looser,10,3,30,306,668
-batter,moderate,chase_looser,20,5,60,209,668
-batter,moderate,chase_looser,30,8,90,124,668
-batter,moderate,general_baseline,10,3,30,266,625
-batter,moderate,general_baseline,20,5,60,166,625
-batter,moderate,general_baseline,30,8,90,90,625
-batter,moderate,general_stricter,10,3,30,216,571
-batter,moderate,general_stricter,20,5,60,122,571
-batter,moderate,general_stricter,30,8,90,62,571
-batter,moderate,general_looser,10,3,30,292,649
-batter,moderate,general_looser,20,5,60,186,649
-batter,moderate,general_looser,30,8,90,117,649
-bowler,available,baseline,10,3,30,473,647
-bowler,available,baseline,20,5,60,367,647
-bowler,available,baseline,30,8,90,294,647
-bowler,available,chase_baseline,10,3,30,210,383
-bowler,available,chase_baseline,20,5,60,141,383
-bowler,available,chase_baseline,30,8,90,92,383
-bowler,available,chase_stricter,10,3,30,151,327
-bowler,available,chase_stricter,20,5,60,98,327
-bowler,available,chase_stricter,30,8,90,64,327
-bowler,available,chase_looser,10,3,30,238,431
-bowler,available,chase_looser,20,5,60,174,431
-bowler,available,chase_looser,30,8,90,122,431
-bowler,available,general_baseline,10,3,30,224,433
-bowler,available,general_baseline,20,5,60,164,433
-bowler,available,general_baseline,30,8,90,102,433
-bowler,available,general_stricter,10,3,30,181,377
-bowler,available,general_stricter,20,5,60,121,377
-bowler,available,general_stricter,30,8,90,78,377
-bowler,available,general_looser,10,3,30,251,464
-bowler,available,general_looser,20,5,60,186,464
-bowler,available,general_looser,30,8,90,122,464
+scenario,role,policy,pressure_definition,minimum_pressure_events,minimum_pressure_matches,minimum_baseline_events,qualifying_players,observed_players,pressure_events_total,baseline_events_total,caveat
+10_pressure_3_matches_30_baseline,batter,strict,chase_baseline,10,3,30,261,886,17990,175062,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,batter,strict,chase_baseline,20,5,60,151,886,17990,175062,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,batter,strict,chase_baseline,30,8,90,86,886,17990,175062,Count only; no ordering or selection is produced.
+10_pressure_3_matches_30_baseline,batter,strict,general_baseline,10,3,30,266,886,17725,175062,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,batter,strict,general_baseline,20,5,60,166,886,17725,175062,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,batter,strict,general_baseline,30,8,90,90,886,17725,175062,Count only; no ordering or selection is produced.
+10_pressure_3_matches_30_baseline,batter,moderate,chase_baseline,10,3,30,261,886,18098,175806,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,batter,moderate,chase_baseline,20,5,60,151,886,18098,175806,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,batter,moderate,chase_baseline,30,8,90,86,886,18098,175806,Count only; no ordering or selection is produced.
+10_pressure_3_matches_30_baseline,batter,moderate,general_baseline,10,3,30,266,886,17834,175806,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,batter,moderate,general_baseline,20,5,60,166,886,17834,175806,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,batter,moderate,general_baseline,30,8,90,90,886,17834,175806,Count only; no ordering or selection is produced.
+10_pressure_3_matches_30_baseline,bowler,legal_ball,chase_baseline,10,3,30,210,639,18390,178297,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,bowler,legal_ball,chase_baseline,20,5,60,141,639,18390,178297,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,bowler,legal_ball,chase_baseline,30,8,90,92,639,18390,178297,Count only; no ordering or selection is produced.
+10_pressure_3_matches_30_baseline,bowler,legal_ball,general_baseline,10,3,30,224,639,18110,178297,Count only; no ordering or selection is produced.
+20_pressure_5_matches_60_baseline,bowler,legal_ball,general_baseline,20,5,60,164,639,18110,178297,Count only; no ordering or selection is produced.
+30_pressure_8_matches_90_baseline,bowler,legal_ball,general_baseline,30,8,90,102,639,18110,178297,Count only; no ordering or selection is produced.

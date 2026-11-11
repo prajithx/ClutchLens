@@ -2,20 +2,30 @@
 
 ## Asset audit
 
-No files were found under `dashboard/static/images/` before this step. The
-asset directory now exists at `dashboard/static/images/stadium/` with a
-placeholder `.gitkeep` only.
+The supplied files were initially found one level too deep at
+`dashboard/static/images/stadium/stadium/`. They were moved into the exact
+required directory. The nested directory was removed after it became empty.
 
 Required local assets are still missing:
 
 | Required slot | Expected path | Status | Licence/source |
 |---|---|---|---|
-| Wide stadium night | `dashboard/static/images/stadium/stadium-wide-night.jpg` | Missing | Not applicable; user must provide or approve a licensed source |
-| Stands and floodlights | `dashboard/static/images/stadium/stadium-stands-night.jpg` | Missing | Not applicable; user must provide or approve a licensed source |
-| Cricket pitch close-up | `dashboard/static/images/stadium/cricket-pitch-closeup.jpg` | Missing | Not applicable; user must provide or approve a licensed source |
+| Wide stadium night | `dashboard/static/images/stadium/stadium-wide-night.jpg` | Integrated | AI-generated illustrative asset; no external licence metadata supplied |
+| Stands and floodlights | `dashboard/static/images/stadium/stadium-stands-night.jpg` | Integrated | AI-generated illustrative asset; no external licence metadata supplied |
+| Cricket pitch close-up | `dashboard/static/images/stadium/cricket-pitch-closeup.jpg` | Integrated | AI-generated illustrative asset; no external licence metadata supplied |
 | Optional atmosphere video | `dashboard/static/images/stadium/stadium-atmosphere.mp4` | Missing | Not applicable; user must provide or approve a licensed source |
 
-No external assets were downloaded, hotlinked, or represented as licensed.
+No external assets were downloaded or hotlinked. The supplied files are
+AI-generated illustrative visuals, not photographs of a verified Rajasthan
+Royals venue or a specifically identified real stadium.
+
+## Integrated image metadata
+
+| Asset | Dimensions | File size |
+|---|---:|---:|
+| `stadium-wide-night.jpg` | 1672 × 941 | 527,227 bytes |
+| `stadium-stands-night.jpg` | 1672 × 941 | 477,722 bytes |
+| `cricket-pitch-closeup.jpg` | 1672 × 941 | 456,457 bytes |
 
 ## Implementation status
 
@@ -33,9 +43,8 @@ The homepage is now asset-ready rather than vector-based:
   existing scroll progress.
 - No video is enabled because no licensed local video exists.
 
-The result is **not yet genuinely photographic** until the required assets are
-provided or approved. Per the Step 3D stop point, no claim of photorealistic
-completion is made.
+The result uses the supplied AI-generated illustrative image assets. It is not
+claimed to depict a real venue or real match.
 
 ## Preserved behaviour
 
@@ -50,16 +59,29 @@ completion is made.
 
 ## Validation
 
-Python route smoke tests and syntax checks should be run after assets are
-provided. The local asset absence is the intentional blocker for visual
-photorealism.
+- Exact file paths exist and each file opens as a valid JPEG.
+- Flask route smoke tests returned HTTP 200 for `/`, `/analytics`, `/players`,
+  and `/ground`.
+- Flask static asset requests returned HTTP 200 for all three image paths.
+- Desktop and mobile browser checks confirmed the image layers load without
+  broken-image icons or horizontal overflow.
+- Scroll checks confirmed progress changes from wide stadium to stands to pitch.
+- Reduced-motion checks confirmed the scroll camera remains static.
+
+## Step 3D.1 integration notes
+
+- Desktop uses centered wide/stands crops and a lower-centered pitch crop;
+  the three 1672 × 941 assets crossfade and scale through the 300vh journey.
+- Mobile uses `56%` wide, `50%` stands, and `52%` pitch horizontal positions
+  so the field and pitch remain in frame. A mobile normal-motion scroll test
+  loaded all three images and reported no horizontal overflow.
+- Reduced-motion mode keeps the wide photographic asset stable and disables
+  the camera transform and scroll listener.
+- The exact command `python -m flask --app dashboard run` is supported by the
+  dashboard package export.
 
 Run the app with:
 
 ```powershell
 python -m flask --app dashboard.app run
 ```
-
-Please provide the three required licensed image files (and optionally the
-video) or approve a specific licensed source before the visual can be
-completed.

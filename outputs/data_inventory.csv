@@ -1,0 +1,7 @@
+file_name,rows,columns,file_size_bytes
+ball_by_ball.csv,200999,33,41071609
+competition_team_player_mapping.csv,6413,6,462969
+competitions.csv,141,4,7624
+matches.csv,883,22,123864
+playing_eleven.csv,28381,9,966287
+teams.csv,353,3,6922

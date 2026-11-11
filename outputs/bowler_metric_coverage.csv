@@ -1,0 +1,8 @@
+pressure_definition,eligible_legal_deliveries,strict_dot_events,all_dismissal_events,candidate_bowler_wickets,run_out_events,other_non_bowler_dismissal_events,bowlers,matches,note
+baseline,178297,63052,10226,9643,574,9,639,838,No economy or conceded-run metric; runs charged to bowler are unresolved.
+chase_baseline,18390,6205,1656,1558,94,4,384,516,No economy or conceded-run metric; runs charged to bowler are unresolved.
+chase_stricter,9918,3488,1042,969,70,3,328,452,No economy or conceded-run metric; runs charged to bowler are unresolved.
+chase_looser,28092,9257,2257,2134,119,4,431,582,No economy or conceded-run metric; runs charged to bowler are unresolved.
+general_baseline,18110,6052,1607,1499,106,2,433,676,No economy or conceded-run metric; runs charged to bowler are unresolved.
+general_stricter,11433,3766,1099,1012,86,1,377,626,No economy or conceded-run metric; runs charged to bowler are unresolved.
+general_looser,24232,8094,1963,1845,115,3,464,698,No economy or conceded-run metric; runs charged to bowler are unresolved.

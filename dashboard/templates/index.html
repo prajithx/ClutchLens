@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name }} · Home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="stadium-lights" aria-hidden="true"></div>
+  <div class="hero-copy">
+    <p class="eyebrow">RAJASTHAN ROYALS · AUCTION INTELLIGENCE</p>
+    <h1>See beyond<br><em>statistics.</em></h1>
+    <p class="hero-lede">A transparent cricket intelligence workspace for understanding batting and bowling context when the game tightens.</p>
+    <div class="hero-actions"><a class="button button-primary" href="{{ url_for('analytics') }}">Explore analytics <span>↗</span></a><a class="text-link" href="{{ url_for('players') }}">Inspect players</a></div>
+  </div>
+  <div class="hero-pitch" aria-label="Animated cricket ball travelling across a night pitch">
+    <div class="pitch-line"></div><div class="cricket-ball"></div><div class="impact-label">SIX</div>
+  </div>
+  <div class="hero-foot"><span>01 / 04</span><span>Pressure is context. Not a shortcut.</span></div>
+</section>
+<section class="intro-grid section-pad">
+  <div><p class="eyebrow">THE CLUTCHLENS PROMISE</p><h2>Decision-grade,<br><em>not noise.</em></h2></div>
+  <div class="intro-text"><p>ClutchLens brings the supplied cricket data into one readable workspace. Every view distinguishes verified source facts from exploratory conditional metrics and fields still under validation.</p><div class="feature-pills"><span>Batting intelligence</span><span>Bowling context</span><span>Transparent evidence</span></div></div>
+</section>
+<section class="category-grid section-pad">
+  <article class="feature-card"><span class="card-index">01</span><h3>Batting intelligence</h3><p>Explore conditional delivery runs, boundaries, and carefully filtered dismissal events without pretending they are complete scorecard metrics.</p><a href="{{ url_for('players') }}">Open player intelligence →</a></article>
+  <article class="feature-card accent-purple"><span class="card-index">02</span><h3>Bowling context</h3><p>Inspect legal-ball coverage and separated dismissal events. Economy and conceded runs remain clearly unavailable from this schema.</p><a href="{{ url_for('ground') }}">View ground data →</a></article>
+</section>
+{% endblock %}

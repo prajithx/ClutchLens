@@ -1,0 +1,5 @@
+formula,result_matches_compared,exact_result_margin_matches,innings_affected_by_nonzero_discrepancy,mean_absolute_margin_error,maximum_absolute_margin_error,interpretation
+runs_only,391,19,236,4.569,21,not proven; result-margin agreement is an external consistency check only
+runs_plus_extras_2,391,17,238,4.525,21,not proven; result-margin agreement is an external consistency check only
+runs_plus_base_extra,391,86,169,2.027,10,not proven; result-margin agreement is an external consistency check only
+current_hypothesis,391,91,164,1.992,10,not proven; result-margin agreement is an external consistency check only

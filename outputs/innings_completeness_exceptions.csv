@@ -1,0 +1,23 @@
+match_id,match_date,comp_id,match_format,season,result,innings_present,delivery_rows_by_innings,revised_target,reason
+15410,2022-06-19,1439,T20I,2022,Match Abandoned,1,1:22,,abandoned match; only recorded innings is expected
+15546,2022-07-02,1452,T20I,2022,No Result,1,1:82,,no-result match; only recorded innings is expected
+20226,2023-05-03,1715,T20,2023,Match Abandoned,1,1:118,,abandoned match; only recorded innings is expected
+21406,2023-04-20,1799,T20I,2023,Match Abandoned,1,1:118,,abandoned match; only recorded innings is expected
+28333,2023-12-29,2058,T20I,2023,No Result,1,1:66,,no-result match; only recorded innings is expected
+31707,2024-04-18,2350,T20I,2024,No Result,1,1:2,,no-result match; only recorded innings is expected
+35424,2024-08-24,2605,T20I,2024,No Result,1,1:125,,no-result match; only recorded innings is expected
+37353,2024-11-18,2455,T20I,2024,No Result,1,1:30,,no-result match; only recorded innings is expected
+39983,2025-02-22,2801,T20I,2025,No Result,1,1:56,,no-result match; only recorded innings is expected
+39985,2025-02-25,2801,T20I,2025,No Result,1,1:113,,no-result match; only recorded innings is expected
+40748,2025-05-05,2725,T20,2025,No Result,1,1:123,,no-result match; only recorded innings is expected
+40751,2025-05-08,2725,T20,2025,No Result,1,1:63,,no-result match; only recorded innings is expected
+41975,2025-10-29,2915,T20I,2025,No Result,1,1:60,,no-result match; only recorded innings is expected
+41979,2025-11-08,2915,T20I,2025,No Result,1,1:29,,no-result match; only recorded innings is expected
+45390,2026-07-01,3126,T20I,2026,No Result,1,1:122,,no-result match; only recorded innings is expected
+45908,2025-09-03,3163,T20I,2025,No Result,1,1:114,,no-result match; only recorded innings is expected
+46311,2025-10-03,3197,T20I,2025,No Result,1,1:13,,no-result match; only recorded innings is expected
+46747,2025-10-18,3226,T20I,2025,No Result,1,1:124,,no-result match; only recorded innings is expected
+46749,2025-10-23,3226,T20I,2025,No Result,1,1:25,,no-result match; only recorded innings is expected
+47968,2025-11-10,3282,T20I,2025,No Result,1,1:41,,no-result match; only recorded innings is expected
+50136,2026-04-06,3298,T20,2026,No Result,1,1:22,,no-result match; only recorded innings is expected
+50408,2026-10-17,3450,T20I,2026,No Result,1,1:55,,no-result match; only recorded innings is expected

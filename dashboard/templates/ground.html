@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name }} · Ground view{% endblock %}
+{% block content %}
+<section class="page-heading section-pad"><div><p class="eyebrow">03 / GROUND & SHOT VISUALISATION</p><h1>See the <em>shape</em> of play.</h1><p class="page-lede">Categorical shot and delivery information from the supplied rows—not invented landing coordinates.</p></div></section>
+<section class="section-pad ground-layout">
+  <article class="panel ground-panel"><p class="eyebrow">ORIGINAL TOP-DOWN VIEW</p><h2>Spatial coordinates unavailable.</h2><div class="ground-art" role="img" aria-label="Original top-down cricket ground illustration with pitch and boundary"><div class="boundary"></div><div class="inner-ring"></div><div class="pitch"><span></span><i></i></div><div class="ground-label">CLUTCHLENS<br><small>CATEGORICAL VIEW</small></div></div><p class="micro-note">The supplied dataset does not include verified spatial shot coordinates; this view shows categorical shot information, not actual landing locations.</p></article>
+  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">STROKE DISTRIBUTION</p><h2>Observed categories</h2></div></div>{% for row in shot_data.strokes %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track"><i style="width: {{ (row.value / shot_data.strokes[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">{{ "{:,}".format(shot_data.missing_stroke) }} rows have no stroke label.</p></article>
+  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">BOWLING SIGNALS</p><h2>Pace / spin</h2></div></div>{% for row in shot_data.pace_spin %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track purple"><i style="width: {{ (row.value / shot_data.pace_spin[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">Delivery-style categories are descriptive source fields; no bowling economy is inferred.</p></article>
+</section>
+{% endblock %}

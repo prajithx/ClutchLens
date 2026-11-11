@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name }} · Analytics{% endblock %}
+{% block content %}
+<section class="page-heading section-pad"><div><p class="eyebrow">01 / ANALYTICS OVERVIEW</p><h1>Read the <em>landscape.</em></h1><p class="page-lede">Verified coverage first. Exploratory context second. Unsupported metrics stay visible as unavailable.</p></div><span class="status-chip">FOUNDATION MODE</span></section>
+<section class="section-pad">
+  <div class="metric-grid">{% for card in dashboard.counts %}<article class="metric-card"><span>{{ card.label }}</span><strong>{{ card.value }}</strong><small>{{ card.detail }}</small></article>{% endfor %}</div>
+</section>
+<section class="dashboard-grid section-pad">
+  <article class="panel status-panel"><div class="panel-heading"><div><p class="eyebrow">DATA STATUS</p><h2>Honesty is a feature.</h2></div><span class="status-dot"></span></div><div class="status-list"><div><b>Batting descriptive metrics</b><span class="status-ready">Partially ready</span><p>Conditional delivery metrics are available on a strict eligible subset.</p></div><div><b>Pressure ratings</b><span class="status-review">Under validation</span><p>Team totals and revised-target semantics are not yet final.</p></div><div><b>Bowler economy</b><span class="status-blocked">Unavailable</span><p>Bowler-conceded runs are not reliably encoded.</p></div></div></article>
+  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">COMPETITION COVERAGE</p><h2>Formats in the pack</h2></div></div>{% for row in dashboard.formats %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track"><i style="width: {{ (row.value / dashboard.formats|map(attribute='value')|max * 100)|round(1) }}%"></i></div><b>{{ row.value }}</b></div>{% endfor %}<p class="micro-note">Verified match counts by supplied format label.</p></article>
+  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">SEASON COVERAGE</p><h2>Observed matches</h2></div></div>{% for row in dashboard.seasons %}<div class="bar-row"><span>{{ row.season }}</span><div class="bar-track purple"><i style="width: {{ (row.value / dashboard.seasons|map(attribute='value')|max * 100)|round(1) }}%"></i></div><b>{{ row.value }}</b></div>{% endfor %}</article>
+</section>
+<section class="section-pad"><div class="callout"><span class="callout-icon">i</span><p>Exploratory pressure flags are context hypotheses, not player scores. No rankings, win probabilities, economy rates, or Top 10 lists are displayed in this foundation.</p><a href="{{ url_for('players') }}">Explore conditional player data →</a></div></section>
+{% endblock %}

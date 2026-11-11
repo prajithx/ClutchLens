@@ -1,0 +1,15 @@
+cross_tab,extras_type,1,2,3,4,5,6,7,0
+extras_type_by_extras1_runs,<NULL>,0,0.0,0.0,0,0.0,189167.0,0.0,0.0
+extras_type_by_extras1_runs,Overstep,576,0.0,0.0,0,0.0,0.0,0.0,0.0
+extras_type_by_extras1_runs,Penalty,0,0.0,0.0,0,0.0,0.0,1.0,0.0
+extras_type_by_extras1_runs,byes,0,0.0,0.0,529,0.0,0.0,0.0,0.0
+extras_type_by_extras1_runs,legbyes,0,0.0,2748.0,0,0.0,0.0,0.0,0.0
+extras_type_by_extras1_runs,other,0,0.0,0.0,0,264.0,0.0,0.0,0.0
+extras_type_by_extras1_runs,wide,0,7714.0,0.0,0,0.0,0.0,0.0,0.0
+extras_type_by_extras_2_runs,<NULL>,1,0.0,0.0,0,0.0,0.0,0.0,189166.0
+extras_type_by_extras_2_runs,Overstep,12,0.0,0.0,9,0.0,0.0,0.0,555.0
+extras_type_by_extras_2_runs,Penalty,0,0.0,0.0,0,0.0,0.0,0.0,1.0
+extras_type_by_extras_2_runs,byes,0,0.0,0.0,0,0.0,0.0,0.0,529.0
+extras_type_by_extras_2_runs,legbyes,0,0.0,0.0,0,0.0,0.0,0.0,2748.0
+extras_type_by_extras_2_runs,other,7,0.0,0.0,7,0.0,0.0,0.0,250.0
+extras_type_by_extras_2_runs,wide,0,0.0,0.0,0,0.0,0.0,0.0,7714.0

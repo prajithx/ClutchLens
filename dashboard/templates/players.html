@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ product_name }} · Players{% endblock %}
+{% block content %}
+<section class="page-heading section-pad"><div><p class="eyebrow">02 / PLAYER INTELLIGENCE</p><h1>Ask better <em>questions.</em></h1><p class="page-lede">Select a player to inspect descriptive conditional evidence. No rank, badge, or recommendation is implied.</p></div></section>
+<section class="section-pad player-layout">
+  <aside class="panel player-picker"><label for="player-search">Find a player</label><input id="player-search" type="search" placeholder="Search supplied player names…" autocomplete="off"><div id="player-results" class="player-results" role="listbox" aria-label="Player results">{% for player in players[:40] %}<a role="option" href="{{ url_for('players', player_id=player.id) }}">{{ player.name }} <small>{{ player.id }}</small></a>{% endfor %}</div><p class="micro-note">Names are sourced from the supplied competition mapping. Search is local to this app.</p></aside>
+  <div class="player-detail">
+    {% if selected %}
+    <div class="profile-head"><div class="avatar">{{ selected.name[:1] }}</div><div><p class="eyebrow">PLAYER PROFILE · ID {{ selected.id }}</p><h2>{{ selected.name }}</h2><p>{{ selected.competitions }} competition mappings · descriptive view only</p></div></div>
+    <div class="split-cards"><article class="panel"><p class="eyebrow">BATTER VIEW</p><h3>Conditional evidence</h3><div class="mini-stats"><span><b>{{ "{:,}".format(selected.batting.eligible_deliveries) }}</b>eligible deliveries</span><span><b>{{ "{:,}".format(selected.batting.observed_runs) }}</b>observed runs</span><span><b>{{ selected.batting.boundaries }}</b>boundary flags</span><span><b>{{ selected.batting.matches }}</b>matches</span></div><p class="micro-note">Strict null-extra subset. Not a complete scorecard strike rate.</p></article><article class="panel"><p class="eyebrow">BOWLER VIEW</p><h3>Event context</h3><div class="mini-stats"><span><b>{{ "{:,}".format(selected.bowling.deliveries) }}</b>legal deliveries</span><span><b>{{ selected.bowling.dismissal_events }}</b>dismissal events</span><span><b>{{ selected.bowling.candidate_bowler_wickets }}</b>candidate bowler wickets</span><span><b>{{ selected.bowling.matches }}</b>matches</span></div><p class="micro-note">Economy and conceded runs: <strong>not available from current dataset.</strong></p></article></div>
+    <div class="callout compact"><span class="callout-icon">!</span><p>{{ selected.status }}</p></div>
+    {% else %}<div class="empty-state"><span class="empty-mark">◎</span><h2>Select a player</h2><p>Use the search panel to open a supplied player profile. Unsupported metrics will remain clearly marked.</p></div>{% endif %}
+  </div>
+</section>
+{% endblock %}

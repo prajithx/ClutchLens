@@ -1,0 +1,7 @@
+definition,eligible_deliveries,flagged_deliveries,matches,innings,batters,bowlers,thresholds
+chase_baseline,83002,19447,516,516,611,384,balls_remaining<=48; rrr>=10; rrr_minus_crr>=3
+chase_stricter,83002,10564,452,452,537,328,balls_remaining<=30; rrr>=12; rrr_minus_crr>=4
+chase_looser,83002,29571,582,582,670,431,balls_remaining<=60; rrr>=8; rrr_minus_crr>=2
+general_baseline,185945,19155,676,676,627,433,balls_remaining<=36; rrr>=0; rrr_minus_crr>=0
+general_stricter,185945,12166,626,626,573,377,balls_remaining<=24; rrr>=0; rrr_minus_crr>=0
+general_looser,185945,25518,698,698,651,464,balls_remaining<=48; rrr>=0; rrr_minus_crr>=0

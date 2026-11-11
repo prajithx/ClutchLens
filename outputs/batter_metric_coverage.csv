@@ -1,0 +1,15 @@
+policy,pressure_definition,eligible_deliveries,pressure_deliveries,eligible_batters,pressure_batters,eligible_matches,pressure_matches,eligible_innings,pressure_innings,runs_observed,four_flags,six_flags,boundary_consistent_rows,notes
+strict,baseline,175062,175062,886,886,838,838,1561,1561,248086,21369,11815,175041,strict: null extras only
+strict,chase_baseline,175062,17990,886,609,838,515,1561,515,248086,21369,11815,175041,strict: null extras only
+strict,chase_stricter,175062,9661,886,535,838,452,1561,452,248086,21369,11815,175041,strict: null extras only
+strict,chase_looser,175062,27548,886,668,838,582,1561,582,248086,21369,11815,175041,strict: null extras only
+strict,general_baseline,175062,17725,886,625,838,676,1561,676,248086,21369,11815,175041,strict: null extras only
+strict,general_stricter,175062,11151,886,571,838,626,1561,626,248086,21369,11815,175041,strict: null extras only
+strict,general_looser,175062,23760,886,649,838,698,1561,698,248086,21369,11815,175041,strict: null extras only
+moderate,baseline,175806,175806,886,886,838,838,1561,1561,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,chase_baseline,175806,18098,886,609,838,515,1561,515,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,chase_stricter,175806,9731,886,535,838,452,1561,452,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,chase_looser,175806,27698,886,668,838,582,1561,582,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,general_baseline,175806,17834,886,625,838,676,1561,676,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,general_stricter,175806,11239,886,571,838,626,1561,626,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0
+moderate,general_looser,175806,23903,886,649,838,698,1561,698,249249,21480,11883,175785,moderate: null extras plus Overstep/other rows with extras_2_runs=0

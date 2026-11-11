@@ -1,0 +1,31 @@
+role,context_key,player_name,comp_name,pressure_definition,minimum_pressure_events,minimum_pressure_matches,minimum_baseline_events,observed_pressure_events_or_legal_balls,observed_pressure_matches,observed_baseline_events_or_legal_balls,meets_pressure_sample_gate,primary_dismissal_gate_applies,meets_primary_dismissal_gate,caveat
+batter,1715:8:4708,Rinku Singh,IPL 2023,chase_baseline,10,3,30,101,5,265,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1715:8:4708,Rinku Singh,IPL 2023,chase_baseline,20,5,60,101,5,265,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1715:8:4708,Rinku Singh,IPL 2023,chase_baseline,30,8,90,101,5,265,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:3508:1077,David Miller,IPL 2022,chase_baseline,10,3,30,87,6,290,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:3508:1077,David Miller,IPL 2022,chase_baseline,20,5,60,87,6,290,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:3508:1077,David Miller,IPL 2022,chase_baseline,30,8,90,87,6,290,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:3297,Shimron Hetmyer,IPL 2025,chase_baseline,10,3,30,73,7,163,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:3297,Shimron Hetmyer,IPL 2025,chase_baseline,20,5,60,73,7,163,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:3297,Shimron Hetmyer,IPL 2025,chase_baseline,30,8,90,73,7,163,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:1:8,Mahendra Singh Dhoni,IPL 2025,chase_baseline,10,3,30,73,6,141,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:1:8,Mahendra Singh Dhoni,IPL 2025,chase_baseline,20,5,60,73,6,141,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:1:8,Mahendra Singh Dhoni,IPL 2025,chase_baseline,30,8,90,73,6,141,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:2:6396,Tim David,IPL 2024,chase_baseline,10,3,30,67,5,143,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:2:6396,Tim David,IPL 2024,chase_baseline,20,5,60,67,5,143,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:2:6396,Tim David,IPL 2024,chase_baseline,30,8,90,67,5,143,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:242:3125,Nicholas Pooran,IPL 2022,chase_baseline,10,3,30,65,5,160,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:242:3125,Nicholas Pooran,IPL 2022,chase_baseline,20,5,60,65,5,160,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1358:242:3125,Nicholas Pooran,IPL 2022,chase_baseline,30,8,90,65,5,160,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:4:2756,Shashank Singh,IPL 2024,chase_baseline,10,3,30,64,6,209,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:4:2756,Shashank Singh,IPL 2024,chase_baseline,20,5,60,64,6,209,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:4:2756,Shashank Singh,IPL 2024,chase_baseline,30,8,90,64,6,209,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:7260,Dhruv Jurel,IPL 2025,chase_baseline,10,3,30,61,5,211,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:7260,Dhruv Jurel,IPL 2025,chase_baseline,20,5,60,61,5,211,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2725:3:7260,Dhruv Jurel,IPL 2025,chase_baseline,30,8,90,61,5,211,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,1715:2:1699,Suryakumar Yadav,IPL 2023,chase_baseline,10,3,30,56,6,295,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1715:2:1699,Suryakumar Yadav,IPL 2023,chase_baseline,20,5,60,56,6,295,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,1715:2:1699,Suryakumar Yadav,IPL 2023,chase_baseline,30,8,90,56,6,295,False,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:3508:3926,Rahul Tewatia,IPL 2024,chase_baseline,10,3,30,53,5,123,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:3508:3926,Rahul Tewatia,IPL 2024,chase_baseline,20,5,60,53,5,123,True,False,True,Sample sensitivity only; not a reliability rating.
+batter,2193:3508:3926,Rahul Tewatia,IPL 2024,chase_baseline,30,8,90,53,5,123,False,False,True,Sample sensitivity only; not a reliability rating.

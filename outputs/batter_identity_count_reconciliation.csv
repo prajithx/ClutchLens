@@ -1,0 +1,2 @@
+player_id,source_player_name,comp_id,team_id,mapping_rows_for_context,valid_baseline_events,strict_eligible_events,extras_types,reason
+286,Kane Richardson,1611,20,1,1,0,legbyes,"Baseline identity has valid context events, but all events are excluded by strict extras policy."

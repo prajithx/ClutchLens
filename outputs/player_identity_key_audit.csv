@@ -1,0 +1,5 @@
+identity_key,columns,mapping_rows,distinct_keys,duplicate_key_groups,duplicate_rows_beyond_first,unique_key,row_multiplication_safe,interpretation
+player_id,player_id,6413,1217,820,5196,False,False,Not safe globally: same player ID appears in multiple competition/team contexts.
+comp_id_plus_player_id,comp_id+player_id,6413,6413,0,0,True,True,Unique in mapping; appropriate competition-scoped identity where team context is not needed.
+team_id_plus_player_id,team_id+player_id,6413,1790,1003,4623,False,False,Not unique: a player/team context appears across competitions.
+comp_id_plus_team_id_plus_player_id,comp_id+team_id+player_id,6413,6413,0,0,True,True,Unique and preserves competition plus team context; safest mapping join key for delivery context.

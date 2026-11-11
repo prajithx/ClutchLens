@@ -1,0 +1,60 @@
+source_file,field,dtype,null_count,null_pct,unique_non_null,ground_relevance
+matches.csv,match_id,int64,0,0.0,883,not a ground geometry field
+matches.csv,comp_id,int64,0,0.0,138,not a ground geometry field
+matches.csv,match_number,int64,0,0.0,75,not a ground geometry field
+matches.csv,match_date,object,0,0.0,686,not a ground geometry field
+matches.csv,stage,object,0,0.0,7,not a ground geometry field
+matches.csv,venue_id,int64,0,0.0,98,venue identifier
+matches.csv,venue_country,object,0,0.0,17,venue country label
+matches.csv,home_team_id,int64,0,0.0,36,not a ground geometry field
+matches.csv,home_team,object,0,0.0,36,not a ground geometry field
+matches.csv,away_team_id,int64,0,0.0,36,not a ground geometry field
+matches.csv,away_team,object,0,0.0,36,not a ground geometry field
+matches.csv,home_team_captain_id,float64,44,4.983,89,not a ground geometry field
+matches.csv,away_team_captain_id,float64,45,5.096,98,not a ground geometry field
+matches.csv,toss_win_team_id,float64,15,1.699,37,not a ground geometry field
+matches.csv,toss_opted,object,15,1.699,2,not a ground geometry field
+matches.csv,man_of_the_match,int64,0,0.0,293,not a ground geometry field
+matches.csv,first_inn_revised_overs,float64,858,97.169,13,not a ground geometry field
+matches.csv,second_inn_revised_overs,float64,858,97.169,12,not a ground geometry field
+matches.csv,revised_target,float64,860,97.395,23,not a ground geometry field
+matches.csv,knock_out,int64,0,0.0,2,not a ground geometry field
+matches.csv,win_team_id,float64,41,4.643,36,not a ground geometry field
+matches.csv,result,object,0,0.0,670,not a ground geometry field
+ball_by_ball.csv,match_id,int64,0,0.0,867,not a ground geometry field
+ball_by_ball.csv,innings,int64,0,0.0,4,not a ground geometry field
+ball_by_ball.csv,overid,int64,0,0.0,20,not a ground geometry field
+ball_by_ball.csv,over_ball_num,int64,0,0.0,13,not a ground geometry field
+ball_by_ball.csv,innings_ball_num,int64,0,0.0,136,not a ground geometry field
+ball_by_ball.csv,batting_team_id,int64,0,0.0,38,not a ground geometry field
+ball_by_ball.csv,bowling_team_id,int64,0,0.0,38,not a ground geometry field
+ball_by_ball.csv,striker_id,int64,0,0.0,888,not a ground geometry field
+ball_by_ball.csv,striker_name,object,0,0.0,885,not a ground geometry field
+ball_by_ball.csv,non_striker_id,int64,0,0.0,867,not a ground geometry field
+ball_by_ball.csv,non_striker_name,object,0,0.0,864,not a ground geometry field
+ball_by_ball.csv,bowler_id,int64,0,0.0,647,not a ground geometry field
+ball_by_ball.csv,bowler_name,object,0,0.0,646,not a ground geometry field
+ball_by_ball.csv,batting_type,object,0,0.0,2,not a ground geometry field
+ball_by_ball.csv,bowling_type,object,0,0.0,12,not a ground geometry field
+ball_by_ball.csv,batting_order,int64,0,0.0,13,not a ground geometry field
+ball_by_ball.csv,runs,int64,0,0.0,7,not a ground geometry field
+ball_by_ball.csv,is_four,bool,0,0.0,2,categorical shot/delivery field
+ball_by_ball.csv,is_six,bool,0,0.0,2,categorical shot/delivery field
+ball_by_ball.csv,is_wicket,bool,0,0.0,2,not a ground geometry field
+ball_by_ball.csv,dismissal_type_id,float64,190118,94.587,8,not a ground geometry field
+ball_by_ball.csv,dismissal_type,object,190118,94.587,9,not a ground geometry field
+ball_by_ball.csv,dismissed_player_id,float64,190107,94.581,814,not a ground geometry field
+ball_by_ball.csv,extras_type,object,189167,94.113,6,not a ground geometry field
+ball_by_ball.csv,extras1_runs,int64,0,0.0,7,not a ground geometry field
+ball_by_ball.csv,extras_2_runs,int64,0,0.0,3,not a ground geometry field
+ball_by_ball.csv,pace_or_spin,object,0,0.0,2,categorical shot/delivery field
+ball_by_ball.csv,bowl_speed,float64,0,0.0,1033,not a ground geometry field
+ball_by_ball.csv,stroke,object,6158,3.064,30,categorical shot/delivery field
+ball_by_ball.csv,delivery_style,object,391,0.195,34,categorical shot/delivery field
+ball_by_ball.csv,over_or_around,object,407,0.202,2,categorical shot/delivery field
+ball_by_ball.csv,on_or_off,object,0,0.0,2,categorical shot/delivery field
+ball_by_ball.csv,delivery_ist_time,object,0,0.0,200826,not a ground geometry field
+competitions.csv,comp_id,int64,0,0.0,141,not a ground geometry field
+competitions.csv,comp_name,object,0,0.0,141,not a ground geometry field
+competitions.csv,match_format,object,0,0.0,2,not a ground geometry field
+competitions.csv,season,object,0,0.0,8,not a ground geometry field

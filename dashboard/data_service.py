@@ -136,8 +136,30 @@ def get_player_data(player_id: str) -> dict | None:
     }
 
 
-def get_shot_data() -> dict:
+def get_venues() -> list[dict]:
+    matches = _data()["matches"]
+    return (
+        matches.groupby(["venue_id", "venue_country"], as_index=False)
+        .agg(match_count=("match_id", "nunique"))
+        .sort_values(["venue_country", "venue_id"])
+        .to_dict("records")
+    )
+
+
+def get_shot_data(venue_id: str | None = None) -> dict:
     ball = _data()["ball"]
+    matches = _data()["matches"]
+    competitions = _data()["competitions"]
+    selected_venue = None
+    if venue_id and str(venue_id).isdigit():
+        selected_venue = int(venue_id)
+        match_ids = matches.loc[matches["venue_id"].eq(selected_venue), "match_id"]
+        ball = ball[ball["match_id"].isin(match_ids)]
+    venue_matches = matches[matches["venue_id"].eq(selected_venue)] if selected_venue is not None else matches.iloc[0:0]
+    venue_matches = venue_matches.merge(
+        competitions[["comp_id", "comp_name", "match_format", "season"]],
+        on="comp_id", how="left", validate="many_to_one",
+    )
     strokes = ball["stroke"].fillna("Unspecified").value_counts().head(12)
     delivery_styles = ball["delivery_style"].fillna("Unspecified").value_counts().head(10)
     pace_spin = ball["pace_or_spin"].fillna("Unspecified").value_counts()
@@ -148,4 +170,15 @@ def get_shot_data() -> dict:
         "total_rows": len(ball),
         "missing_stroke": int(ball["stroke"].isna().sum()),
         "missing_delivery_style": int(ball["delivery_style"].isna().sum()),
+        "venue_id": selected_venue,
+        "venue_country": (
+            str(venue_matches["venue_country"].iloc[0])
+            if not venue_matches.empty else None
+        ),
+        "venue_count": int(len(venue_matches)),
+        "formats": sorted(venue_matches["match_format"].dropna().astype(str).unique().tolist()),
+        "seasons": sorted(venue_matches["season"].dropna().astype(str).unique().tolist()),
+        "matches": venue_matches[
+            ["match_date", "home_team", "away_team", "comp_name", "match_format", "result"]
+        ].sort_values("match_date", ascending=False).to_dict("records") if selected_venue is not None else [],
     }

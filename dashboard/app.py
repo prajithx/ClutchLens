@@ -17,6 +17,7 @@ except ImportError:
     from data_service import (
         get_dashboard_data,
         get_player_data,
+        get_players,
         get_recruitment_data,
         get_shot_data,
         get_venues,

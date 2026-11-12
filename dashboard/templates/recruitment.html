@@ -38,9 +38,9 @@
 <section class="section-pad suggested-shortlist-section" aria-labelledby="suggested-shortlist-title">
   <div class="suggested-shortlist-header">
     <div>
-      <p class="eyebrow">ANALYTICAL ASSISTANCE</p>
+      <p class="eyebrow">EVIDENCE-BASED SUGGESTIONS</p>
       <h2 id="suggested-shortlist-title">Suggested Shortlist</h2>
-      <p class="page-lede">{{ recruitment.suggested_analysis.scope }} Suggestions require human review and never enter the working shortlist automatically.</p>
+      <p class="page-lede">{{ recruitment.suggested_analysis.scope }} These deterministic evidence prompts are not an AI prediction, ranking, or availability signal.</p>
     </div>
     <button class="button button-muted button-small" id="suggested-rerun" type="button">Re-run analysis</button>
   </div>
@@ -62,6 +62,18 @@
     <label class="suggested-search" for="suggested-search">Search supplied name
       <input id="suggested-search" type="search" placeholder="Search suggestions..." autocomplete="off">
     </label>
+    <label for="suggested-season-filter">Season
+      <select id="suggested-season-filter">
+        <option value="all">All supplied seasons</option>
+        {% for season in recruitment.candidates|map(attribute="season")|unique|sort %}<option value="{{ season }}">{{ season }}</option>{% endfor %}
+      </select>
+    </label>
+    <label for="suggested-team-filter">Team
+      <select id="suggested-team-filter">
+        <option value="all">All supplied teams</option>
+        {% for team in recruitment.candidates|map(attribute="team_name")|unique|sort %}<option value="{{ team }}">{{ team }}</option>{% endfor %}
+      </select>
+    </label>
   </div>
   <div class="recruitment-results-bar"><span id="suggested-result-count">{{ recruitment.suggested_shortlist|length }} suggestions</span><span>Neutral evidence prompts · no ranking or score</span></div>
   <div id="suggested-empty" class="empty-state suggested-empty" {% if recruitment.suggested_shortlist %}hidden{% endif %}>
@@ -69,7 +81,7 @@
   </div>
   <div class="suggested-grid" id="suggested-grid">
     {% for suggestion in recruitment.suggested_shortlist %}
-    <article class="suggested-card panel" data-suggested-card data-role="{{ suggestion.role }}" data-evidence="{{ suggestion.evidence_label }}" data-name="{{ suggestion.player_name|lower }}">
+    <article class="suggested-card panel" data-suggested-card data-role="{{ suggestion.role }}" data-evidence="{{ suggestion.evidence_label }}" data-season="{{ suggestion.season }}" data-team="{{ suggestion.team_name }}" data-name="{{ suggestion.player_name|lower }}">
       <div class="candidate-card-top"><span class="suggestion-label">{{ suggestion.suggestion_status }}</span><span class="status-chip">{{ suggestion.role|title }}</span></div>
       <p class="eyebrow">CONTEXT · {{ suggestion.context_key }}</p>
       <h3>{{ suggestion.player_name }}</h3>
@@ -118,18 +130,30 @@
       <label class="recruitment-search">Search supplied name
         <input id="recruitment-search" type="search" placeholder="Search candidates..." autocomplete="off">
       </label>
+      <label>Season
+        <select id="recruitment-season-filter">
+          <option value="all">All supplied seasons</option>
+          {% for season in recruitment.candidates|map(attribute="season")|unique|sort %}<option value="{{ season }}">{{ season }}</option>{% endfor %}
+        </select>
+      </label>
+      <label>Team
+        <select id="recruitment-team-filter">
+          <option value="all">All supplied teams</option>
+          {% for team in recruitment.candidates|map(attribute="team_name")|unique|sort %}<option value="{{ team }}">{{ team }}</option>{% endfor %}
+        </select>
+      </label>
       <button class="button button-muted" id="recruitment-reset" type="button">Reset filters</button>
     </div>
   </div>
 
-  <div class="recruitment-results-bar"><span id="recruitment-result-count">0 contexts</span><span id="recruitment-filter-note">No ranking or score is calculated.</span></div>
+  <div class="recruitment-results-bar" aria-live="polite"><span id="recruitment-result-count">0 contexts</span><span id="recruitment-filter-note">Results are contextual records; no ranking or score is calculated.</span></div>
   <div id="recruitment-empty" class="empty-state recruitment-empty" hidden>
     <span class="empty-mark">◎</span><h2>No matching evidence</h2><p>Try another classification, role, evidence status, or supplied player name.</p>
   </div>
 
   <div class="candidate-grid" id="candidate-grid">
     {% for candidate in recruitment.candidates %}
-    <article class="candidate-card panel" data-candidate-card data-candidate-key="{{ candidate.candidate_key }}" data-classification="{{ candidate.classification }}" data-role="{{ candidate.role }}" data-evidence="{{ candidate.evidence_label }}" data-name="{{ candidate.player_name|lower }}">
+    <article class="candidate-card panel" data-candidate-card data-candidate-key="{{ candidate.candidate_key }}" data-classification="{{ candidate.classification }}" data-role="{{ candidate.role }}" data-evidence="{{ candidate.evidence_label }}" data-season="{{ candidate.season }}" data-team="{{ candidate.team_name }}" data-name="{{ candidate.player_name|lower }}">
       <div class="candidate-card-top">
         <label class="compare-toggle"><input type="checkbox" data-compare-check aria-label="Select {{ candidate.player_name }} for comparison"><span>Compare</span></label>
         <span class="status-chip">{{ candidate.classification|replace('_', ' ')|title }}</span>

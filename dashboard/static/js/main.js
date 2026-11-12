@@ -56,6 +56,8 @@ function initializeRecruitmentWorkspace() {
   const role = document.querySelector("#recruitment-role-filter");
   const evidence = document.querySelector("#recruitment-evidence-filter");
   const search = document.querySelector("#recruitment-search");
+  const season = document.querySelector("#recruitment-season-filter");
+  const team = document.querySelector("#recruitment-team-filter");
   const resultCount = document.querySelector("#recruitment-result-count");
   const empty = document.querySelector("#recruitment-empty");
   const shortlistKey = "clutchlens:working-shortlist:v1";
@@ -65,6 +67,8 @@ function initializeRecruitmentWorkspace() {
   const suggestedRole = document.querySelector("#suggested-role-filter");
   const suggestedEvidence = document.querySelector("#suggested-evidence-filter");
   const suggestedSearch = document.querySelector("#suggested-search");
+  const suggestedSeason = document.querySelector("#suggested-season-filter");
+  const suggestedTeam = document.querySelector("#suggested-team-filter");
   const suggestedResultCount = document.querySelector("#suggested-result-count");
   const suggestedEmpty = document.querySelector("#suggested-empty");
 
@@ -75,6 +79,8 @@ function initializeRecruitmentWorkspace() {
       const matches = (classification.value === "all" || card.dataset.classification === classification.value)
         && (role.value === "all" || card.dataset.role === role.value)
         && (evidence.value === "all" || card.dataset.evidence === evidence.value)
+        && (season.value === "all" || card.dataset.season === season.value)
+        && (team.value === "all" || card.dataset.team === team.value)
         && (!query || card.dataset.name.includes(query));
       card.hidden = !matches;
       if (matches) visible += 1;
@@ -83,13 +89,15 @@ function initializeRecruitmentWorkspace() {
     empty.hidden = visible !== 0;
   };
 
-  [classification, role, evidence, search].forEach(control => control.addEventListener("input", renderCards));
+  [classification, role, evidence, search, season, team].forEach(control => control.addEventListener("input", renderCards));
   const renderSuggestedCards = () => {
     const query = suggestedSearch.value.trim().toLowerCase();
     let visible = 0;
     suggestedCards.forEach(card => {
       const matches = (suggestedRole.value === "all" || card.dataset.role === suggestedRole.value)
         && (suggestedEvidence.value === "all" || card.dataset.evidence === suggestedEvidence.value)
+        && (suggestedSeason.value === "all" || card.dataset.season === suggestedSeason.value)
+        && (suggestedTeam.value === "all" || card.dataset.team === suggestedTeam.value)
         && (!query || card.dataset.name.includes(query));
       card.hidden = !matches;
       if (matches) visible += 1;
@@ -97,13 +105,15 @@ function initializeRecruitmentWorkspace() {
     suggestedResultCount.textContent = `${visible} suggestion${visible === 1 ? "" : "s"}`;
     suggestedEmpty.hidden = visible !== 0;
   };
-  [suggestedRole, suggestedEvidence, suggestedSearch].forEach(control => control.addEventListener("input", renderSuggestedCards));
+  [suggestedRole, suggestedEvidence, suggestedSearch, suggestedSeason, suggestedTeam].forEach(control => control.addEventListener("input", renderSuggestedCards));
   document.querySelector("#suggested-rerun").addEventListener("click", () => window.location.reload());
   document.querySelector("#recruitment-reset").addEventListener("click", () => {
     classification.value = "all";
     role.value = "all";
     evidence.value = "all";
     search.value = "";
+    season.value = "all";
+    team.value = "all";
     renderCards();
   });
 
@@ -124,6 +134,7 @@ function initializeRecruitmentWorkspace() {
       saveShortlist(shortlist, shortlistKey);
       renderShortlist();
       updateShortlistButtons();
+      updateSuggestedButtons();
     });
   });
   document.querySelectorAll("[data-suggested-add]").forEach(button => {
@@ -153,6 +164,7 @@ function initializeRecruitmentWorkspace() {
     saveShortlist(shortlist, shortlistKey);
     renderShortlist();
     updateShortlistButtons();
+    updateSuggestedButtons();
   });
   document.querySelector("#shortlist-export").addEventListener("click", () => exportShortlist(shortlist, byKey));
   document.querySelector("#shortlist-print").addEventListener("click", () => window.print());
@@ -184,6 +196,7 @@ function initializeRecruitmentWorkspace() {
       saveShortlist(shortlist, shortlistKey);
       renderShortlist();
       updateShortlistButtons();
+      updateSuggestedButtons();
       showDetail(candidate);
     });
     panel.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -235,6 +248,7 @@ function initializeRecruitmentWorkspace() {
       saveShortlist(shortlist, shortlistKey);
       renderShortlist();
       updateShortlistButtons();
+      updateSuggestedButtons();
     }));
   }
 

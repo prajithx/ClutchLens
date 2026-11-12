@@ -51,6 +51,7 @@ RECRUITMENT_REQUIRED_COLUMNS = {
 }
 
 RECRUITMENT_CONTEXT_KEY = ["comp_id", "team_id", "player_id"]
+SUGGESTED_ROLES = {"batter", "bowler"}
 
 
 def _read_csv(name: str, required: bool = True) -> pd.DataFrame:
@@ -233,6 +234,65 @@ def get_shot_data(venue_id: str | None = None) -> dict:
     }
 
 
+def _build_suggested_shortlist(candidates: pd.DataFrame) -> list[dict]:
+    """Return transparent evidence-available contexts without ranking them."""
+    suggestions = []
+    for row in candidates.to_dict("records"):
+        role = str(row.get("role", ""))
+        if role not in SUGGESTED_ROLES or row.get("classification") == "STATUS_UNRESOLVED":
+            continue
+
+        if role == "batter":
+            baseline_field = "baseline_events"
+            pressure_field = "pressure_events"
+            baseline_label = "eligible deliveries"
+            pressure_label = "pressure-context events"
+        else:
+            baseline_field = "baseline_legal_balls"
+            pressure_field = "pressure_legal_balls"
+            baseline_label = "legal balls"
+            pressure_label = "pressure-context legal balls"
+
+        baseline = pd.to_numeric(pd.Series([row.get(baseline_field)]), errors="coerce").iloc[0]
+        pressure = pd.to_numeric(pd.Series([row.get(pressure_field)]), errors="coerce").iloc[0]
+        if pd.isna(baseline) or pd.isna(pressure) or baseline <= 0 or pressure <= 0:
+            continue
+
+        baseline_matches = row.get("baseline_matches", "unavailable")
+        pressure_matches = row.get("pressure_matches", "unavailable")
+        limitations = str(row.get("unavailable_metric_summary", "")).strip()
+        suggestions.append({
+            "candidate_key": row["candidate_key"],
+            "player_name": row["player_name"],
+            "player_id": row["player_id"],
+            "context_key": row["context_key"],
+            "role": role,
+            "role_status": row["role_status"],
+            "classification": row["classification"],
+            "evidence_label": row["evidence_label"],
+            "team_name": row["team_name"],
+            "comp_name": row["comp_name"],
+            "season": row["season"],
+            "match_format": row["match_format"],
+            "baseline_value": int(baseline),
+            "pressure_value": int(pressure),
+            "baseline_field": baseline_field,
+            "pressure_field": pressure_field,
+            "evidence_fields": (
+                f"{baseline_field}, {pressure_field}, baseline_matches, "
+                f"pressure_matches, evidence_label, classification"
+            ),
+            "reason": (
+                f"Step 4B provides {int(baseline):,} {baseline_label} and "
+                f"{int(pressure):,} {pressure_label} across "
+                f"{baseline_matches} baseline and {pressure_matches} pressure-context matches."
+            ),
+            "limitations": limitations or "Additional validated role and performance fields are unavailable.",
+            "suggestion_status": "Evidence available · suggested for human review",
+        })
+    return sorted(suggestions, key=lambda row: (row["role"], row["player_name"], row["context_key"]))
+
+
 @lru_cache(maxsize=1)
 def get_recruitment_data() -> dict:
     evidence = {key: _read_recruitment_csv(key) for key in RECRUITMENT_FILES}
@@ -317,6 +377,7 @@ def get_recruitment_data() -> dict:
         return frame.to_dict("records")
 
     classification_counts = candidates["classification"].value_counts().to_dict()
+    suggested_shortlist = _build_suggested_shortlist(candidates)
     return {
         "overview": {
             "reference_season": reference_season,
@@ -333,6 +394,19 @@ def get_recruitment_data() -> dict:
             "classification_counts": classification_counts,
         },
         "candidates": records(candidates.sort_values(["classification", "role", "player_name", "context_key"])),
+        "suggested_shortlist": suggested_shortlist,
+        "suggested_analysis": {
+            "method": (
+                "A context is included only when its supplied Step 4B role is batter or bowler, "
+                "its classification is resolved, and both baseline and pressure-context sample "
+                "fields are positive."
+            ),
+            "scope": "Contextual evidence rows; no player-level aggregation or ranking.",
+            "limitations": (
+                "Suggestions are analytical assistance only. Roles remain evidence-selected, "
+                "pressure fields are provisional proxies, and auction availability is not verified."
+            ),
+        },
         "squad": records(evidence["squad"].sort_values(["player_name", "player_id"])),
         "external": records(evidence["external"].sort_values(["role", "player_name"])),
         "limitations": [

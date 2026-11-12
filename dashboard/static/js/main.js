@@ -49,6 +49,12 @@ function initializeRecruitmentWorkspace() {
   const shortlistKey = "clutchlens:working-shortlist:v1";
   const selectedForComparison = new Set();
   let shortlist = loadShortlist(byKey, shortlistKey);
+  const suggestedCards = [...document.querySelectorAll("[data-suggested-card]")];
+  const suggestedRole = document.querySelector("#suggested-role-filter");
+  const suggestedEvidence = document.querySelector("#suggested-evidence-filter");
+  const suggestedSearch = document.querySelector("#suggested-search");
+  const suggestedResultCount = document.querySelector("#suggested-result-count");
+  const suggestedEmpty = document.querySelector("#suggested-empty");
 
   const renderCards = () => {
     const query = search.value.trim().toLowerCase();
@@ -66,6 +72,21 @@ function initializeRecruitmentWorkspace() {
   };
 
   [classification, role, evidence, search].forEach(control => control.addEventListener("input", renderCards));
+  const renderSuggestedCards = () => {
+    const query = suggestedSearch.value.trim().toLowerCase();
+    let visible = 0;
+    suggestedCards.forEach(card => {
+      const matches = (suggestedRole.value === "all" || card.dataset.role === suggestedRole.value)
+        && (suggestedEvidence.value === "all" || card.dataset.evidence === suggestedEvidence.value)
+        && (!query || card.dataset.name.includes(query));
+      card.hidden = !matches;
+      if (matches) visible += 1;
+    });
+    suggestedResultCount.textContent = `${visible} suggestion${visible === 1 ? "" : "s"}`;
+    suggestedEmpty.hidden = visible !== 0;
+  };
+  [suggestedRole, suggestedEvidence, suggestedSearch].forEach(control => control.addEventListener("input", renderSuggestedCards));
+  document.querySelector("#suggested-rerun").addEventListener("click", () => window.location.reload());
   document.querySelector("#recruitment-reset").addEventListener("click", () => {
     classification.value = "all";
     role.value = "all";
@@ -92,6 +113,20 @@ function initializeRecruitmentWorkspace() {
       renderShortlist();
       updateShortlistButtons();
     });
+  });
+  document.querySelectorAll("[data-suggested-add]").forEach(button => {
+    button.addEventListener("click", () => {
+      const key = button.dataset.candidateKey;
+      if (shortlist.has(key)) return;
+      shortlist.add(key);
+      saveShortlist(shortlist, shortlistKey);
+      renderShortlist();
+      updateShortlistButtons();
+      updateSuggestedButtons();
+    });
+  });
+  document.querySelectorAll("[data-suggested-detail]").forEach(button => {
+    button.addEventListener("click", () => showDetail(byKey.get(button.dataset.candidateKey)));
   });
 
   document.querySelector("#close-detail").addEventListener("click", () => {
@@ -200,10 +235,23 @@ function initializeRecruitmentWorkspace() {
     });
   }
 
+  function updateSuggestedButtons() {
+    document.querySelectorAll("[data-suggested-add]").forEach(button => {
+      const active = shortlist.has(button.dataset.candidateKey);
+      button.disabled = active;
+      button.textContent = active ? "Already in working shortlist" : "Review and add";
+      button.setAttribute("aria-label", active
+        ? "Already in human-reviewed working shortlist"
+        : "Review and add to human-reviewed working shortlist");
+    });
+  }
+
   renderCards();
+  renderSuggestedCards();
   renderComparison();
   renderShortlist();
   updateShortlistButtons();
+  updateSuggestedButtons();
 }
 
 function loadShortlist(byKey, storageKey) {

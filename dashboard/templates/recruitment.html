@@ -35,6 +35,56 @@
   </div>
 </section>
 
+<section class="section-pad suggested-shortlist-section" aria-labelledby="suggested-shortlist-title">
+  <div class="suggested-shortlist-header">
+    <div>
+      <p class="eyebrow">ANALYTICAL ASSISTANCE</p>
+      <h2 id="suggested-shortlist-title">Suggested Shortlist</h2>
+      <p class="page-lede">{{ recruitment.suggested_analysis.scope }} Suggestions require human review and never enter the working shortlist automatically.</p>
+    </div>
+    <button class="button button-muted button-small" id="suggested-rerun" type="button">Re-run analysis</button>
+  </div>
+  <div class="callout suggested-shortlist-note"><span class="callout-icon">i</span><p>{{ recruitment.suggested_analysis.method }} <strong>{{ recruitment.suggested_analysis.limitations }}</strong></p></div>
+  <div class="suggested-controls" aria-label="Suggested shortlist filters">
+    <label for="suggested-role-filter">Role
+      <select id="suggested-role-filter">
+        <option value="all">All supported roles</option>
+        <option value="batter">Batter</option>
+        <option value="bowler">Bowler</option>
+      </select>
+    </label>
+    <label for="suggested-evidence-filter">Evidence status
+      <select id="suggested-evidence-filter">
+        <option value="all">All evidence statuses</option>
+        <option value="provisional data-supported candidate">Provisional data-supported candidate</option>
+      </select>
+    </label>
+    <label class="suggested-search" for="suggested-search">Search supplied name
+      <input id="suggested-search" type="search" placeholder="Search suggestions..." autocomplete="off">
+    </label>
+  </div>
+  <div class="recruitment-results-bar"><span id="suggested-result-count">{{ recruitment.suggested_shortlist|length }} suggestions</span><span>Neutral evidence prompts · no ranking or score</span></div>
+  <div id="suggested-empty" class="empty-state suggested-empty" {% if recruitment.suggested_shortlist %}hidden{% endif %}>
+    <span class="empty-mark">◎</span><h3>Insufficient evidence for suggestions</h3><p>The supplied data does not currently contain positive baseline and pressure-context samples for a supported role.</p>
+  </div>
+  <div class="suggested-grid" id="suggested-grid">
+    {% for suggestion in recruitment.suggested_shortlist %}
+    <article class="suggested-card panel" data-suggested-card data-role="{{ suggestion.role }}" data-evidence="{{ suggestion.evidence_label }}" data-name="{{ suggestion.player_name|lower }}">
+      <div class="candidate-card-top"><span class="suggestion-label">{{ suggestion.suggestion_status }}</span><span class="status-chip">{{ suggestion.role|title }}</span></div>
+      <p class="eyebrow">CONTEXT · {{ suggestion.context_key }}</p>
+      <h3>{{ suggestion.player_name }}</h3>
+      <p class="candidate-context">Player {{ suggestion.player_id }} · {{ suggestion.team_name }} · {{ suggestion.comp_name }} · {{ suggestion.season }} · {{ suggestion.match_format }}</p>
+      <p class="candidate-role">Role evidence: <strong>{{ suggestion.role_status }}</strong></p>
+      <div class="evidence-stats suggestion-stats"><span><b>{{ "{:,}".format(suggestion.baseline_value) }}</b>{{ suggestion.baseline_field|replace("_", " ") }}</span><span><b>{{ "{:,}".format(suggestion.pressure_value) }}</b>{{ suggestion.pressure_field|replace("_", " ") }}</span><span><b>{{ suggestion.evidence_label }}</b>evidence status</span></div>
+      <p class="suggestion-reason">{{ suggestion.reason }}</p>
+      <p class="micro-note"><strong>Fields used:</strong> {{ suggestion.evidence_fields }}.</p>
+      <p class="micro-note"><strong>Limitations:</strong> {{ suggestion.limitations }}</p>
+      <div class="candidate-actions"><button class="button button-small button-primary" type="button" data-suggested-add data-candidate-key="{{ suggestion.candidate_key }}">Review and add</button><button class="button button-small button-muted" type="button" data-suggested-detail data-candidate-key="{{ suggestion.candidate_key }}">Open evidence profile</button></div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
 <section class="section-pad recruitment-workspace">
   <div class="recruitment-toolbar panel">
     <div>

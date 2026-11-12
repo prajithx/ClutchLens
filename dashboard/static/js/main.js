@@ -12,12 +12,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const results = document.querySelector("#player-results");
   if (search && results) {
     search.addEventListener("input", async () => {
-      const response = await fetch(`/api/players?q=${encodeURIComponent(search.value)}`);
-      if (!response.ok) return;
-      const players = await response.json();
-      results.innerHTML = players.length
-        ? players.map(player => `<a role="option" href="/players?player_id=${player.id}">${escapeHtml(player.name)} <small>${player.id}</small></a>`).join("")
-        : "<p class='micro-note'>No supplied player matches that search.</p>";
+      search.setAttribute("aria-busy", "true");
+      try {
+        const response = await fetch(`/api/players?q=${encodeURIComponent(search.value)}`);
+        if (!response.ok) {
+          results.innerHTML = "<p class='micro-note'>Player search is temporarily unavailable.</p>";
+          return;
+        }
+        const players = await response.json();
+        results.innerHTML = players.length
+          ? players.map(player => `<a role="option" href="/players?player_id=${player.id}">${escapeHtml(player.name)} <small>${player.id}</small></a>`).join("")
+          : "<p class='micro-note'>No supplied player matches that search.</p>";
+        const resultStatus = document.querySelector("#player-result-status");
+        if (resultStatus) resultStatus.textContent = `${players.length} matching players`;
+      } catch (error) {
+        results.innerHTML = "<p class='micro-note'>Player search is temporarily unavailable.</p>";
+      } finally {
+        search.setAttribute("aria-busy", "false");
+      }
     });
   }
 

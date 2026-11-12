@@ -1,23 +1,44 @@
 {% extends "base.html" %}
 {% block title %}{{ product_name }} · Ground view{% endblock %}
 {% block content %}
-<section class="page-heading section-pad"><div><p class="eyebrow">03 / GROUND EXPLORER</p><h1>See the <em>shape</em> of play.</h1><p class="page-lede">Choose an exact supplied venue ID to inspect its real match coverage and categorical delivery data—not invented landing coordinates.</p></div></section>
-<section class="section-pad venue-toolbar">
-  <form method="get" action="{{ url_for('ground') }}">
-    <label for="venue_id">Select supplied venue</label>
-    <select id="venue_id" name="venue_id" onchange="this.form.submit()">
-      <option value="">Choose venue ID / country</option>
-      {% for venue in venues %}<option value="{{ venue.venue_id }}" {% if shot_data.venue_id == venue.venue_id %}selected{% endif %}>Venue {{ venue.venue_id }} · {{ venue.venue_country }} · {{ venue.match_count }} matches</option>{% endfor %}
-    </select>
-  </form>
-  {% if shot_data.venue_id %}<div class="venue-summary"><strong>Venue {{ shot_data.venue_id }} · {{ shot_data.venue_country }}</strong><span>{{ shot_data.venue_count }} matches · {{ shot_data.formats|join(", ") }} · seasons {{ shot_data.seasons|join(", ") }}</span></div>{% endif %}
+<section class="ground-cinematic-hero" aria-labelledby="ground-title">
+  <div class="ground-hero-atmosphere" aria-hidden="true"><span class="ground-hero-orbit"></span><span class="ground-hero-light"></span></div>
+  <div class="ground-hero-copy section-pad">
+    <p class="eyebrow">03 / GROUND EXPLORER</p>
+    <h1 id="ground-title">See the <em>shape</em><br>of play.</h1>
+    <p class="page-lede">A cinematic route from supplied venue coverage to observed delivery categories. The visual layer is illustrative; the evidence remains exact.</p>
+    <span class="ground-hero-disclosure">STORYTELLING LAYER · NO SPATIAL CLAIMS</span>
+  </div>
+  <div class="ground-hero-scroll" aria-hidden="true"><span></span>SCROLL TO EXPLORE</div>
 </section>
-<section class="section-pad ground-layout">
-  <article class="panel ground-panel"><p class="eyebrow">ILLUSTRATIVE LAYOUT</p><h2>Spatial coordinates unavailable.</h2><div class="ground-art" role="img" aria-label="Illustrative top-down cricket ground diagram, not to scale"><div class="boundary"></div><div class="inner-ring"></div><div class="pitch"><span></span><i></i></div><div class="ground-label">NOT TO SCALE<br><small>NO SUPPLIED GEOMETRY</small></div></div><p class="micro-note">Illustrative layout — not to scale; supplied data does not include verified shot landing coordinates or stadium dimensions.</p></article>
-  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">STROKE DISTRIBUTION</p><h2>Observed categories</h2></div></div>{% for row in shot_data.strokes %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track"><i style="width: {{ (row.value / shot_data.strokes[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">{{ "{:,}".format(shot_data.missing_stroke) }} rows have no stroke label.</p></article>
-  <article class="panel"><div class="panel-heading"><div><p class="eyebrow">BOWLING SIGNALS</p><h2>Pace / spin</h2></div></div>{% for row in shot_data.pace_spin %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track purple"><i style="width: {{ (row.value / shot_data.pace_spin[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">Delivery-style categories are descriptive source fields; no bowling economy is inferred.</p></article>
+
+<section class="section-pad ground-selection" aria-labelledby="venue-selection-title">
+  <div class="ground-selection-intro"><p class="eyebrow">SELECT THE SOURCE CONTEXT</p><h2 id="venue-selection-title">Begin with an exact supplied venue.</h2><p class="micro-note">Venue IDs and country labels come from the supplied match data. No stadium name or geometry is inferred.</p></div>
+  <div class="ground-selection-panel panel">
+    <form method="get" action="{{ url_for('ground') }}">
+      <label for="venue_id">Select supplied venue</label>
+      <select id="venue_id" name="venue_id" onchange="this.form.submit()">
+        <option value="">Choose venue ID / country</option>
+        {% for venue in venues %}<option value="{{ venue.venue_id }}" {% if shot_data.venue_id == venue.venue_id %}selected{% endif %}>Venue {{ venue.venue_id }} · {{ venue.venue_country }} · {{ venue.match_count }} matches</option>{% endfor %}
+      </select>
+    </form>
+    {% if shot_data.venue_id %}<div class="venue-summary"><span class="eyebrow">ACTIVE SOURCE CONTEXT</span><strong>Venue {{ shot_data.venue_id }} · {{ shot_data.venue_country }}</strong><span>{{ shot_data.venue_count }} matches · {{ shot_data.formats|join(", ") }} · seasons {{ shot_data.seasons|join(", ") }}</span></div>{% else %}<div class="venue-summary venue-summary-empty"><span class="eyebrow">ALL SUPPLIED ROWS</span><strong>No venue selected</strong><span>Choose an exact venue ID to narrow the match log and category counts.</span></div>{% endif %}
+  </div>
+</section>
+
+<section class="section-pad ground-story" aria-labelledby="ground-story-title">
+  <div class="ground-story-heading"><div><p class="eyebrow">FROM ATMOSPHERE TO EVIDENCE</p><h2 id="ground-story-title">A visual cue, then the source signal.</h2></div><p class="page-lede">Scroll through the illustrative pitch layer and the factual categorical summaries independently.</p></div>
+  <div class="ground-story-grid">
+    <div class="ground-visual-column">
+      <article class="panel ground-panel"><p class="eyebrow">ILLUSTRATIVE LAYOUT</p><h2>Spatial coordinates unavailable.</h2><div class="ground-art" role="img" aria-label="Illustrative top-down cricket ground diagram, not to scale"><div class="boundary"></div><div class="inner-ring"></div><div class="pitch"><span></span><i></i></div><div class="ground-label">NOT TO SCALE<br><small>NO SUPPLIED GEOMETRY</small></div></div><p class="ground-disclosure">Illustrative layout — not to scale.</p><p class="micro-note">Supplied data does not include verified shot landing coordinates or stadium dimensions. This visual must not be read as a measured map.</p></article>
+    </div>
+    <div class="ground-evidence-column">
+      <article class="panel ground-evidence-panel"><div class="panel-heading"><div><p class="eyebrow">STROKE DISTRIBUTION</p><h2>Observed categories</h2></div><span class="status-chip">SOURCE COUNTS</span></div>{% for row in shot_data.strokes %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track" role="img" aria-label="{{ row.label }}: {{ row.value }} observed rows"><i style="width: {{ (row.value / shot_data.strokes[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">{{ "{:,}".format(shot_data.missing_stroke) }} rows have no stroke label.</p></article>
+      <article class="panel ground-evidence-panel"><div class="panel-heading"><div><p class="eyebrow">BOWLING SIGNALS</p><h2>Pace / spin</h2></div><span class="status-chip">CATEGORICAL</span></div>{% for row in shot_data.pace_spin %}<div class="bar-row"><span>{{ row.label }}</span><div class="bar-track purple" role="img" aria-label="{{ row.label }}: {{ row.value }} observed rows"><i style="width: {{ (row.value / shot_data.pace_spin[0].value * 100)|round(1) }}%"></i></div><b>{{ "{:,}".format(row.value) }}</b></div>{% endfor %}<p class="micro-note">Delivery-style categories are descriptive source fields; no bowling economy or spatial position is inferred.</p></article>
+    </div>
+  </div>
 </section>
 {% if shot_data.venue_id %}
-<section class="section-pad venue-matches"><article class="panel"><div class="panel-heading"><div><p class="eyebrow">MATCH LOG</p><h2>Matches at Venue {{ shot_data.venue_id }}</h2></div><span class="status-chip">SOURCE JOINED</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Teams</th><th>Competition</th><th>Format</th><th>Result</th></tr></thead><tbody>{% for match in shot_data.matches %}<tr><td>{{ match.match_date }}</td><td>{{ match.home_team }} <span class="muted">v</span> {{ match.away_team }}</td><td>{{ match.comp_name }}</td><td>{{ match.match_format }}</td><td>{{ match.result }}</td></tr>{% endfor %}</tbody></table></div></article></section>
+<section class="section-pad venue-matches"><article class="panel ground-match-log"><div class="panel-heading"><div><p class="eyebrow">MATCH LOG · SOURCE JOINED</p><h2>Matches at Venue {{ shot_data.venue_id }}</h2></div><span class="status-chip">FACTUAL RECORDS</span></div><div class="table-wrap"><table><thead><tr><th>Date</th><th>Teams</th><th>Competition</th><th>Format</th><th>Result</th></tr></thead><tbody>{% for match in shot_data.matches %}<tr><td>{{ match.match_date }}</td><td>{{ match.home_team }} <span class="muted">v</span> {{ match.away_team }}</td><td>{{ match.comp_name }}</td><td>{{ match.match_format }}</td><td>{{ match.result }}</td></tr>{% endfor %}</tbody></table></div></article></section>
 {% endif %}
 {% endblock %}

@@ -100,6 +100,18 @@ auction availability; roles, retention/release status, auction pool, budget,
 and squad needs remain unavailable unless supplied by an official source.
 The shortlist is a human review queue, not a ranking or recommendation.
 
+Run the Phase 7 route/API smoke tests with:
+
+```powershell
+python -m pytest -q tests\test_phase7_qa.py
+```
+
+The browser QA pass uses the local server and a clean browser context. Start
+the app with `python dashboard\app.py`, open `http://127.0.0.1:5000`, and
+exercise the five routes at desktop, tablet, and mobile viewport sizes. The
+browser pass must record console errors, failed requests, focus behavior,
+shortlist persistence, and screenshots; it must not use external services.
+
 Ground Explorer selections use the exact supplied `venue_id` and display
 `venue_country` only as source metadata. The supplied data has no stadium
 names, coordinates, dimensions, or shot landing locations, so its ground

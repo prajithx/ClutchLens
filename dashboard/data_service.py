@@ -53,6 +53,33 @@ RECRUITMENT_REQUIRED_COLUMNS = {
 RECRUITMENT_CONTEXT_KEY = ["comp_id", "team_id", "player_id"]
 SUGGESTED_ROLES = {"batter", "bowler"}
 
+FINAL_REPORT_RECOMMENDATIONS = {
+    "batters": [
+        "Heinrich Klaasen",
+        "Shreyas Iyer",
+        "Kamindu Mendis",
+        "Mohammad Nawaz",
+        "Washington Sundar",
+        "Towhid Hridoy",
+        "Dhruv Jurel",
+        "Tim David",
+        "Suryakumar Yadav",
+        "Rinku Singh",
+    ],
+    "bowlers": [
+        "Mohammad Nawaz",
+        "Gudakesh Motie",
+        "Mitchell Santner",
+        "Lockie Ferguson",
+        "Matheesha Pathirana",
+        "Mohsin Khan",
+        "Varun Chakravarthy",
+        "Krunal Pandya",
+        "Sikandar Raza",
+        "Mujeeb Ur Rahman",
+    ],
+}
+
 
 def _read_csv(name: str, required: bool = True) -> pd.DataFrame:
     path = RAW / name
@@ -407,6 +434,7 @@ def get_recruitment_data() -> dict:
                 "pressure fields are provisional proxies, and auction availability is not verified."
             ),
         },
+        "final_report_recommendations": FINAL_REPORT_RECOMMENDATIONS,
         "squad": records(evidence["squad"].sort_values(["player_name", "player_id"])),
         "external": records(evidence["external"].sort_values(["role", "player_name"])),
         "limitations": [

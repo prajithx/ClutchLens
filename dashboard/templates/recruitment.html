@@ -14,6 +14,32 @@
   <div class="callout"><span class="callout-icon">!</span><p><strong>Auction availability is not verified by the supplied data.</strong> Every candidate remains <code>NOT_VERIFIED_FROM_SUPPLIED_DATA</code>.</p></div>
 </section>
 
+<section class="section-pad" aria-labelledby="final-report-recommendations-title">
+  <div class="panel">
+    <div class="panel-heading">
+      <div>
+        <p class="eyebrow">SUBMITTED REPORT</p>
+        <h2 id="final-report-recommendations-title">Final Report Recommendations</h2>
+        <p class="micro-note">These are the final recommendations from the submitted ClutchLens report. They are separate from the evidence-based candidate suggestions and do not confirm IPL 2027 auction availability.</p>
+      </div>
+    </div>
+    <div class="split-cards">
+      <article>
+        <h3>Batters</h3>
+        <ol>
+          {% for player in recruitment.final_report_recommendations.batters %}<li>{{ player }}</li>{% endfor %}
+        </ol>
+      </article>
+      <article>
+        <h3>Bowlers</h3>
+        <ol>
+          {% for player in recruitment.final_report_recommendations.bowlers %}<li>{{ player }}</li>{% endfor %}
+        </ol>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="section-pad recruitment-overview" aria-label="Recruitment evidence overview">
   <article class="metric-card"><span>Candidate contexts</span><strong>{{ recruitment.overview.candidate_contexts }}</strong><small>{{ recruitment.overview.candidate_players }} unique supplied player IDs</small></article>
   <article class="metric-card"><span>Batter contexts</span><strong>{{ recruitment.overview.role_counts.get("batter", 0) }}</strong><small>Evidence-selected contexts</small></article>
@@ -216,7 +242,9 @@
 <section class="section-pad methodology-panel">
   <article class="panel">
     <p class="eyebrow">HOW TO READ THIS ANALYSIS</p><h2>Signals, not assumptions.</h2>
+    <div class="callout"><span class="callout-icon">i</span><p><strong>Final report methodology:</strong> pressure means valid second-innings chases with win probability between 20% and 80% and 60 or fewer balls remaining. The composite uses 60% WPA under pressure, 20% gap from usual output, and 20% consistency, with shrinkage toward the league average. The report's out-of-fold AUC of 0.895 is a model-validation result, not a guarantee of selection accuracy or future performance.</p></div>
     <div class="methodology-columns">{% for limitation in recruitment.limitations %}<p><span>↳</span>{{ limitation }}</p>{% endfor %}</div>
+    <p class="micro-note">Some players have limited IPL pressure evidence, and IPL 2027 auction availability is not confirmed.</p>
   </article>
 </section>
 <script id="recruitment-data" type="application/json">{{ recruitment.candidates|tojson }}</script>

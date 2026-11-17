@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ClutchLens Updated Dataset and RR Status Addendum</title>
+<style>
+  @page { size: A4; margin: 18mm 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; color: #172033; font-size: 10.5pt; line-height: 1.38; }
+  h1 { color: #102a56; font-size: 25pt; margin: 0 0 8pt; }
+  h2 { color: #102a56; font-size: 17pt; margin: 0 0 10pt; border-bottom: 2px solid #e6a23c; padding-bottom: 5pt; }
+  h3 { color: #102a56; font-size: 12.5pt; margin: 14pt 0 5pt; }
+  p { margin: 6pt 0; }
+  .eyebrow { color: #e6a23c; font-weight: bold; letter-spacing: 1.4px; text-transform: uppercase; }
+  .muted { color: #58657a; }
+  .callout { background: #f0f5fb; border-left: 4px solid #e6a23c; padding: 10pt 12pt; margin: 12pt 0; }
+  .warning { background: #fff7e6; border-left: 4px solid #d88a00; padding: 9pt 11pt; }
+  table { width: 100%; border-collapse: collapse; margin: 8pt 0 12pt; font-size: 9.2pt; }
+  th { background: #102a56; color: white; text-align: left; }
+  th, td { border: 1px solid #cbd4e1; padding: 5pt 6pt; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f9fc; }
+  ul { margin-top: 5pt; }
+  li { margin: 3pt 0; }
+  .page-break { page-break-before: always; }
+  .footer { margin-top: 22pt; padding-top: 7pt; border-top: 1px solid #cbd4e1; color: #58657a; font-size: 8.5pt; }
+  .rank { width: 8%; text-align: center; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14pt; }
+</style>
+</head>
+<body>
+<section>
+  <div class="eyebrow">ClutchLens · SupeRR Selector Season 2 · Round 1</div>
+  <h1>Updated dataset and RR 2027 status notice</h1>
+  <p class="muted">Report addendum to the existing 24-page ClutchLens final report · 17 November 2026</p>
+  <div class="callout">
+    <strong>How to read this addendum.</strong> The original report pages and historical rankings are preserved.
+    This addendum supersedes the earlier “status not confirmed” wording and the earlier description of
+    <code>extras1_runs</code> wherever they conflict with the completed updated-data audit.
+  </div>
+  <h2>1. Updated organiser dataset</h2>
+  <ul>
+    <li>The organiser’s updated ball-by-ball CSV is the active input.</li>
+    <li>Old and updated files both contain <strong>200,999 rows</strong>, <strong>33 columns</strong>, and <strong>867 matches</strong>.</li>
+    <li>The date range remains <strong>2022-01-23 to 2026-11-01</strong>.</li>
+    <li>Stable delivery keys are unchanged: no added or deleted keys, and no duplicate keys.</li>
+    <li>There are <strong>200,037 changed cells across 199,980 rows</strong>: <code>extras1_runs</code> changed in 199,980 cells, and 57 player-name cells changed from <strong>AHT Donald</strong> to <strong>Aneurin Donald</strong> for player ID 4458.</li>
+  </ul>
+  <h3>Extras treatment</h3>
+  <p>In the updated file, <code>extras1_runs</code> behaves as numeric extras evidence: it is zero on ordinary deliveries and takes positive values on labeled extras. Its exact score-total meaning is not formally documented. It was therefore <strong>not added to score reconstruction</strong>.</p>
+  <p><code>extras_2_runs</code> remains unresolved and is not used to invent a score-total definition. These limitations remain part of the evidence boundary.</p>
+  <div class="warning"><strong>Analytical consequence:</strong> The updated dataset did not add matches or deliveries. Pressure counts, candidate metrics, model metrics, historical ranking order, and final recommendation membership remain unchanged from the verified analysis.</div>
+  <div class="footer">This is a report-only correction and status addendum. It does not change the dashboard or the underlying analytical methodology.</div>
+</section>
+
+<section class="page-break">
+  <div class="eyebrow">ClutchLens · Recruitment context</div>
+  <h2>2. RR 2027 Squad Status &amp; Auction Availability</h2>
+  <p>The historical ranking answers “who performed best under the declared historical method.” Squad status answers a separate question. A retained or traded-in player is already in RR’s squad and is <strong>not an auction target</strong>. A released player is not automatically a confirmed auction participant.</p>
+  <h3>Official RR evidence</h3>
+  <p>The official Rajasthan Royals announcement dated 17 November 2026 confirms the following facts:</p>
+  <table>
+    <tr><th>Player</th><th>Reported RR status</th><th>Auction interpretation</th></tr>
+    <tr><td>Dhruv Jurel</td><td>Retained by RR</td><td>Already in squad; not an auction target.</td></tr>
+    <tr><td>Nandre Burger</td><td>Retained by RR</td><td>Already in squad; not an auction target.</td></tr>
+    <tr><td>Emanjot Singh Chahal</td><td>Released by RR</td><td>Released by RR; auction registration/availability not independently confirmed.</td></tr>
+    <tr><td>Shimron Hetmyer</td><td>Released by RR</td><td>Released by RR; auction registration/availability not independently confirmed.</td></tr>
+    <tr><td>Tushar Deshpande</td><td>Released by RR</td><td>Released by RR; auction registration/availability not independently confirmed.</td></tr>
+  </table>
+  <p class="muted">The official announcement also records Mohammed Shami and Manimaran Siddharth as traded into RR and Sam Curran as traded out. No auction registration or final auction-pool evidence was supplied for any player.</p>
+  <div class="page-break"></div>
+  <h3>Source and discrepancy resolution</h3>
+  <p><strong>Official Rajasthan Royals announcement:</strong> “Rajasthan Royals back core group ahead of IPL 2027”, 17 November 2026.<br>
+  https://www.rajasthanroyals.com/latest-news/ipl-2027-rr-players-retention-list-retained-released</p>
+  <p>This official source resolves the reported discrepancy: <strong>Nandre Burger is retained</strong>, while <strong>Emanjot Singh Chahal is released</strong>.</p>
+  <h3>Recommendation interpretation</h3>
+  <p>Among the final ranked recommendations, Dhruv Jurel is confirmed retained and must not be presented as an auction target. No final ranked recommendation is confirmed by the official source as released. The remaining ranked players have <strong>unconfirmed RR 2027 status and unconfirmed auction availability</strong>; they remain historical performance recommendations only.</p>
+  <div class="footer">Status labels do not alter any historical score, rank, confidence value, or player selection.</div>
+</section>
+
+<section class="page-break">
+  <div class="eyebrow">ClutchLens · Preserved historical analysis</div>
+  <h2>3. Final ranked lists retained unchanged</h2>
+  <p>The lists below are reproduced exactly from the latest verified final report. Squad status is shown separately and does not change their historical order.</p>
+  <table>
+    <tr><th class="rank">Rank</th><th>Top 10 batters</th><th>Top 10 bowlers</th></tr>
+    <tr><td class="rank">1</td><td>Heinrich Klaasen</td><td>Mohammad Nawaz</td></tr>
+    <tr><td class="rank">2</td><td>Shreyas Iyer</td><td>Gudakesh Motie</td></tr>
+    <tr><td class="rank">3</td><td>Kamindu Mendis</td><td>Mitchell Santner</td></tr>
+    <tr><td class="rank">4</td><td>Mohammad Nawaz</td><td>Lockie Ferguson</td></tr>
+    <tr><td class="rank">5</td><td>Washington Sundar</td><td>Matheesha Pathirana</td></tr>
+    <tr><td class="rank">6</td><td>Towhid Hridoy</td><td>Mohsin Khan</td></tr>
+    <tr><td class="rank">7</td><td>Dhruv Jurel — retained by RR; not an auction target</td><td>Varun Chakravarthy</td></tr>
+    <tr><td class="rank">8</td><td>Tim David</td><td>Krunal Pandya</td></tr>
+    <tr><td class="rank">9</td><td>Suryakumar Yadav</td><td>Sikandar Raza</td></tr>
+    <tr><td class="rank">10</td><td>Rinku Singh</td><td>Mujeeb Ur Rahman</td></tr>
+  </table>
+  <h3>Actionability boundary</h3>
+  <ul>
+    <li>Historical recommendation is not confirmed auction availability.</li>
+    <li>Only official squad-status facts are labelled confirmed in this addendum.</li>
+    <li>No player is removed or re-ranked because of retention or release status.</li>
+    <li>Any auction shortlist based on these rankings is provisional until the official auction registration and final pool are available.</li>
+  </ul>
+  <div class="footer">End of addendum · Historical rankings, metrics, and methodology from the original report remain intact.</div>
+</section>
+</body>
+</html>

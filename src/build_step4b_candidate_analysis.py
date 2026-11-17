@@ -474,7 +474,7 @@ def report(
         "The insufficient-evidence CSV contains observed contexts that were not selected because one or more primary sample gates failed. High observed event volume alone is not treated as reliability evidence.",
         "",
         "## Blocked metrics and limitations",
-        "- `extras1_runs` is a category code; `extras_2_runs` remains unresolved.",
+        "- `extras1_runs` is numeric extras evidence but not a verified score-total field; `extras_2_runs` remains unresolved.",
         "- `runs` and source boundary flags are conditional/medium-confidence batter evidence.",
         "- Chase-context flags are reconstructed match-state proxies, not validated psychological pressure.",
         "- Bowler conceded runs, economy, average, final pressure ratings, composite ratings, and external role enrichment remain blocked.",

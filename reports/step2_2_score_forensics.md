@@ -4,9 +4,9 @@ This validation uses only the supplied raw and generated files. It does not crea
 
 ## Confirmed interpretations
 
-- `extras1_runs` is a category code, high confidence: its values map exactly to the observed extras labels and must not be added as runs.
+- `extras1_runs` in the updated file behaves as a numeric extras field: it is 0 on ordinary deliveries and takes positive values on labeled extras. The supplied schema does not define whether it is a complete extras total, so it is not added to score reconstruction.
 - `runs` behaves like batter runs with medium confidence: ordinary deliveries contain cricket-like 0/1/2/3/4/5/6 values, while wides and byes are zero. The schema does not explicitly name it.
-- `extras_2_runs` is unresolved, low/medium confidence: it is zero on 200,963 rows and non-zero on only 37 rows. Its values occur in Overstep, `other`, and one null-extra row, but no supplied total-extras definition identifies whether it is an amount or derived field.
+- `extras_2_runs` is unresolved, low/medium confidence: it is zero on 200,963 rows and non-zero on 36 rows. Its values occur in Overstep, `other`, and one null-extra row, but no supplied total-extras definition identifies whether it is an amount or derived field.
 - Team totals are not proven by this pack. The current hypothesis remains a transparent provisional reconstruction, not an accepted scorecard total.
 - Bowler-conceded runs/economy are unavailable from the supplied schema. Wides, byes, legbyes, penalty, and unresolved Overstep/`other` treatment prevent a reliable charged-runs calculation.
 
@@ -14,13 +14,13 @@ This validation uses only the supplied raw and generated files. It does not crea
 
 | extras_type | match_id | innings | overid | over_ball_num | innings_ball_num | striker | bowler | runs | extras1_runs | extras_2_runs | is_wicket | dismissal_type |
 |---|---:|---:|---:|---:|---:|---|---|---:|---:|---:|---|---|
-| <NULL> | 13511 | 1 | 1 | 1 | 1 | Jason Roy | Sheldon Cottrell | 0 | 6 | 0 | False | nan |
+| <NULL> | 13511 | 1 | 1 | 1 | 1 | Jason Roy | Sheldon Cottrell | 0 | 0 | 0 | False | nan |
 | Overstep | 13513 | 1 | 4 | 2 | 20 | Nicholas Pooran | George Garton | 0 | 1 | 0 | False | nan |
-| Penalty | 16753 | 2 | 6 | 4 | 34 | Harry Tector | Fareed Malik | 0 | 7 | 0 | False | nan |
-| byes | 13512 | 2 | 11 | 2 | 63 | Romario Shepherd | Adil Rashid | 0 | 4 | 0 | False | nan |
-| legbyes | 13511 | 2 | 4 | 5 | 23 | Brandon King | Adil Rashid | 0 | 3 | 0 | False | nan |
-| other | 13513 | 1 | 10 | 1 | 57 | Rovman Powell | Tymal Mills | 0 | 5 | 0 | False | nan |
-| wide | 13511 | 1 | 7 | 4 | 40 | Eoin Morgan | Akeal Hosein | 0 | 2 | 0 | False | nan |
+| Penalty | 16753 | 2 | 6 | 4 | 34 | Harry Tector | Fareed Malik | 0 | 5 | 0 | False | nan |
+| byes | 13512 | 2 | 11 | 2 | 63 | Romario Shepherd | Adil Rashid | 0 | 2 | 0 | False | nan |
+| legbyes | 13511 | 2 | 4 | 5 | 23 | Brandon King | Adil Rashid | 0 | 4 | 0 | False | nan |
+| other | 13513 | 1 | 10 | 1 | 57 | Rovman Powell | Tymal Mills | 0 | 1 | 0 | False | nan |
+| wide | 13511 | 1 | 7 | 4 | 40 | Eoin Morgan | Akeal Hosein | 0 | 1 | 0 | False | nan |
 
 ## All non-zero `extras_2_runs` evidence
 
@@ -29,21 +29,21 @@ There are **36** non-zero rows in the supplied CSV. The prompt referred to 37, b
 | extras_type | match_id | innings | overid | over_ball_num | innings_ball_num | striker | bowler | runs | extras1_runs | extras_2_runs | is_wicket | dismissal_type |
 |---|---:|---:|---:|---:|---:|---|---|---:|---:|---:|---|---|
 | Overstep | 13523 | 1 | 1 | 4 | 4 | Ishan Kishan | Akeal Hosein | 0 | 1 | 4 | False | nan |
-| other | 13614 | 1 | 18 | 5 | 111 | Dasun Shanaka | Mitchell Starc | 0 | 5 | 4 | False | nan |
+| other | 13614 | 1 | 18 | 5 | 111 | Dasun Shanaka | Mitchell Starc | 0 | 1 | 4 | False | nan |
 | Overstep | 14112 | 1 | 11 | 5 | 66 | David Warner | Varun Chakravarthy | 0 | 1 | 4 | False | nan |
-| other | 14127 | 2 | 9 | 3 | 52 | Prithvi Shaw | Obed McCoy | 0 | 5 | 4 | False | nan |
-| other | 14159 | 2 | 9 | 1 | 51 | Ishan Kishan | Umran Malik | 0 | 5 | 1 | False | nan |
+| other | 14127 | 2 | 9 | 3 | 52 | Prithvi Shaw | Obed McCoy | 0 | 1 | 4 | False | nan |
+| other | 14159 | 2 | 9 | 1 | 51 | Ishan Kishan | Umran Malik | 0 | 1 | 1 | False | nan |
 | Overstep | 15796 | 2 | 14 | 4 | 88 | Lorcan Tucker | Umran Malik | 0 | 1 | 1 | False | nan |
 | Overstep | 16424 | 2 | 6 | 1 | 33 | Anamul Haque | Tanaka Chivanga | 0 | 1 | 4 | False | nan |
-| nan | 17555 | 1 | 5 | 4 | 29 | Dawid Malan | Haris Rauf | 0 | 6 | 1 | False | nan |
+| nan | 17555 | 1 | 5 | 4 | 29 | Dawid Malan | Haris Rauf | 0 | 0 | 1 | False | nan |
 | Overstep | 20186 | 2 | 20 | 2 | 130 | Krishnappa Gowtham | Tushar Deshpande | 0 | 1 | 1 | False | nan |
-| other | 20188 | 1 | 19 | 4 | 117 | M Shahrukh Khan | KM Asif | 0 | 5 | 1 | False | nan |
+| other | 20188 | 1 | 19 | 4 | 117 | M Shahrukh Khan | KM Asif | 0 | 1 | 1 | False | nan |
 | Overstep | 20199 | 2 | 10 | 4 | 59 | Nitish Rana | Marco Jansen | 0 | 1 | 1 | False | nan |
 | Overstep | 20201 | 1 | 11 | 5 | 66 | Krunal Pandya | Sikandar Raza | 0 | 1 | 4 | False | nan |
 | Overstep | 20218 | 1 | 16 | 5 | 101 | Marcus Stoinis | Kagiso Rabada | 0 | 1 | 1 | False | nan |
-| other | 20234 | 2 | 13 | 3 | 80 | Nehal Wadhera | Harshal Patel | 0 | 5 | 4 | False | nan |
-| other | 20243 | 2 | 19 | 4 | 121 | Tim David | Naveen ul Haq | 0 | 5 | 4 | False | nan |
-| other | 21583 | 1 | 20 | 4 | 119 | Moeen Ali | Mohammed Shami | 0 | 5 | 1 | False | nan |
+| other | 20234 | 2 | 13 | 3 | 80 | Nehal Wadhera | Harshal Patel | 0 | 1 | 4 | False | nan |
+| other | 20243 | 2 | 19 | 4 | 121 | Tim David | Naveen ul Haq | 0 | 1 | 4 | False | nan |
+| other | 21583 | 1 | 20 | 4 | 119 | Moeen Ali | Mohammed Shami | 0 | 1 | 1 | False | nan |
 | Overstep | 30068 | 1 | 6 | 2 | 32 | David Warner | Mustafizur Rahman | 0 | 1 | 1 | False | nan |
 | Overstep | 30071 | 2 | 15 | 3 | 91 | Tristan Stubbs | Varun Chakravarthy | 0 | 1 | 4 | False | nan |
 | Overstep | 30076 | 2 | 5 | 5 | 30 | Sai Sudharsan | Manimaran Siddharth | 0 | 1 | 1 | False | nan |
@@ -51,19 +51,19 @@ There are **36** non-zero rows in the supplied CSV. The prompt referred to 37, b
 | Overstep | 31254 | 1 | 17 | 3 | 101 | Andre Russell | Yash Dayal | 0 | 1 | 4 | False | nan |
 | Overstep | 31265 | 2 | 1 | 3 | 3 | Sunil Narine | Lizaad Williams | 0 | 1 | 1 | False | nan |
 | Overstep | 31278 | 2 | 3 | 2 | 14 | Rohit Sharma | Vaibhav Arora | 0 | 1 | 4 | False | nan |
-| other | 36200 | 2 | 18 | 1 | 110 | William Jacks | Alzarri Joseph | 0 | 5 | 4 | False | nan |
-| other | 37093 | 2 | 19 | 3 | 111 | Yasim Murtaza | Abdul Rahmani | 0 | 5 | 1 | False | nan |
-| other | 37278 | 1 | 12 | 1 | 69 | Suryakumar Yadav | Taskin Ahmed | 0 | 5 | 4 | False | nan |
+| other | 36200 | 2 | 18 | 1 | 110 | William Jacks | Alzarri Joseph | 0 | 1 | 4 | False | nan |
+| other | 37093 | 2 | 19 | 3 | 111 | Yasim Murtaza | Abdul Rahmani | 0 | 1 | 1 | False | nan |
+| other | 37278 | 1 | 12 | 1 | 69 | Suryakumar Yadav | Taskin Ahmed | 0 | 1 | 4 | False | nan |
 | Overstep | 37894 | 1 | 17 | 5 | 106 | Zakary Foulkes | Matheesha Pathirana | 0 | 1 | 4 | False | nan |
 | Overstep | 38844 | 1 | 19 | 1 | 111 | Jaker Ali Anik | Romario Shepherd | 0 | 1 | 1 | False | nan |
 | Overstep | 39811 | 1 | 6 | 1 | 34 | Finn Allen | Abbas Afridi | 0 | 1 | 1 | False | nan |
-| other | 40038 | 1 | 19 | 3 | 114 | Mark Wood | Mohammed Shami | 0 | 5 | 1 | False | nan |
-| other | 40695 | 1 | 18 | 1 | 115 | Ishan Kishan | Jofra Archer | 0 | 5 | 4 | False | nan |
+| other | 40038 | 1 | 19 | 3 | 114 | Mark Wood | Mohammed Shami | 0 | 1 | 1 | False | nan |
+| other | 40695 | 1 | 18 | 1 | 115 | Ishan Kishan | Jofra Archer | 0 | 1 | 4 | False | nan |
 | Overstep | 40756 | 1 | 4 | 5 | 23 | Ravichandran Ashwin | Yudhvir Singh | 0 | 1 | 1 | False | nan |
 | Overstep | 43057 | 2 | 14 | 6 | 85 | Karun Nair | Marco Jansen | 0 | 1 | 1 | False | nan |
 | Overstep | 46740 | 2 | 1 | 3 | 3 | Sahibzada Farhan | Nandre Burger | 0 | 1 | 1 | False | nan |
-| other | 48467 | 1 | 20 | 6 | 126 | Curtis Campher | Muhammad Jawadullah | 0 | 5 | 1 | False | nan |
-| other | 55078 | 1 | 20 | 4 | 124 | Eshan Malinga | Razaullah Razaullah | 0 | 5 | 1 | False | nan |
+| other | 48467 | 1 | 20 | 6 | 126 | Curtis Campher | Muhammad Jawadullah | 0 | 1 | 1 | False | nan |
+| other | 55078 | 1 | 20 | 4 | 124 | Eshan Malinga | Razaullah Razaullah | 0 | 1 | 1 | False | nan |
 
 The rows cluster into 21 Overstep rows, 14 `other` rows, and one null-extra row. By value, 20 rows contain 1 and 16 contain 4. This establishes where the field appears, but does not establish its semantic unit.
 

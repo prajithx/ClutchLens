@@ -147,14 +147,14 @@ def metric_rows(context: pd.DataFrame, raw_ball: pd.DataFrame, matches: pd.DataF
         "Not an official over count.")
     add("bowler", "runs conceded", "Runs charged to bowler including applicable extras",
         "team total, batter runs, wides/no-balls/byes/leg-byes attribution", "runs and extras codes only",
-        "not calculated", "extras1_runs is category code; extras_2_runs unresolved",
+        "not calculated", "extras1_runs numeric semantics unverified; extras_2_runs unresolved",
         "BLOCKED", "authoritative bowler-charge fields or scorecards",
         "Core bowling efficiency field unavailable.")
     add("bowler", "wides and no-balls", "Extra deliveries and charged runs",
         "verified extra type and quantity", "extras_type, extras1_runs, extras_2_runs",
         "category descriptions only", "quantity semantics are not reliable",
         "BLOCKED", "validated extras contract",
-        "Do not infer charged runs from category codes.")
+        "Do not infer charged runs from unverified extras totals.")
     add("bowler", "candidate dismissals", "Filtered potential bowler-attributed dismissal events",
         "dismissal type and attribution rules", "is_wicket, dismissal_type, bowler_id",
         "filter Bowled/Caught/LBW/Stump/Hit Wicket", "candidate events are not official wickets",
@@ -350,7 +350,7 @@ def inventory_report(inventory: pd.DataFrame, raw: dict[str, pd.DataFrame], cont
         *schema_lines,
         "",
         "## Important source semantics",
-        "- `extras1_runs` is an extras category code, not a verified extras-run total.",
+        "- `extras1_runs` behaves as numeric extras evidence in the updated file, but is not a verified extras-run total.",
         "- `extras_2_runs` has sparse non-zero values with unresolved semantics.",
         "- `runs` is usable only as conditional observed evidence; it is not formally verified as official batter runs.",
         "- `legal_ball` excludes documented wide/Overstep cases but retains other-extra caveats.",

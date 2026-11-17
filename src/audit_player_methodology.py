@@ -258,7 +258,7 @@ def report(ball: pd.DataFrame, matches: pd.DataFrame, mapping: pd.DataFrame, con
         "This audit establishes reproducible metric feasibility only. It creates no player rankings, Top 10 list, composite rating, pressure score, recommendation, or auction value.", "",
         "## Executive summary",
         f"- Supplied raw files include {len(ball):,} delivery rows, {len(matches):,} match rows, and {len(mapping):,} mapping rows.",
-        f"- `extras1_runs` remains a category code; `extras_2_runs` has {len(nonzero)} non-zero rows and is not semantically resolved.",
+        f"- `extras1_runs` is numeric extras evidence in the updated file but is not a verified score-total field; `extras_2_runs` has {len(nonzero)} non-zero rows and is not semantically resolved.",
         "- Batter runs, conditional balls, source boundary flags, and filtered dismissal events are partially supportable on strict/moderate subsets.",
         "- Legal balls and conservative bowler dismissal/dot events are descriptively supportable; conceded runs and economy remain BLOCKED.",
         "- Pressure contexts are observed/provisional coverage definitions, not validated player pressure ratings.",

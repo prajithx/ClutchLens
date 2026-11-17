@@ -61,7 +61,7 @@ The CSV sensitivity outputs show the less-strict 10/3/30, primary 20/5/60, and s
 The insufficient-evidence CSV contains observed contexts that were not selected because one or more primary sample gates failed. High observed event volume alone is not treated as reliability evidence.
 
 ## Blocked metrics and limitations
-- `extras1_runs` is a category code; `extras_2_runs` remains unresolved.
+- `extras1_runs` is numeric extras evidence but not a verified score-total field; `extras_2_runs` remains unresolved.
 - `runs` and source boundary flags are conditional/medium-confidence batter evidence.
 - Chase-context flags are reconstructed match-state proxies, not validated psychological pressure.
 - Bowler conceded runs, economy, average, final pressure ratings, composite ratings, and external role enrichment remain blocked.
@@ -69,7 +69,7 @@ The insufficient-evidence CSV contains observed contexts that were not selected 
 
 ## Raw-file integrity
 ```text
-ball_by_ball.csv: a3926f49d2c684dca2a5d2de535a02c5ee46ea654ca1e79dd31c69e7544e9889
+ball_by_ball.csv: 01e2b4379edfbab6a6e456d304cb3c70f554cb312ef93d9588f3f32a82cb396e
 matches.csv: bb100ab84b8b9a15160c1f2315cf675210131a30e779ec5079fd5403dcf56eef
 competitions.csv: 507ceb7189f972d4e4f299ddcfc97f3c3247af1913f6291106f161fa8353fd9b
 competition_team_player_mapping.csv: 1ded4e42a933618572d6e2c3a521c3257eb1844fab4456d567d77cbb2d3bbb12

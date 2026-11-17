@@ -253,7 +253,7 @@ def build_context() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, list[str]
         )
     coverage = pd.DataFrame(coverage_rows)
     return context, innings_summary, coverage, [
-        "extras1_runs is categorical: observed values map one-to-one to extra labels, so it was not added to score.",
+        "extras1_runs behaves as numeric extras evidence in the updated file, but its exact score-total semantics are unverified, so it was not added to score.",
         "team_runs_event = runs + extras_2_runs + one base run for every non-null extras_type. This is a transparent reconstruction assumption.",
         "wide and Overstep are treated as non-legal deliveries. 'other' is treated as legal because its legal-ball meaning is not independently documented; rows are flagged for review.",
         "All T20 and T20I competitions were assigned a default 20-over limit. Revised-overs values above 20 were observed as multiples of six (for example 42, 48, 90, 114) and normalized to legal-ball limits divided by six.",

@@ -16,7 +16,7 @@ See `outputs/innings_completeness_exceptions.csv` for every exception.
 
 ## Extras, score, and bowler-run findings
 
-- `extras1_runs` is a category code with high confidence, based on its exact one-to-one mapping to `extras_type`.
+- `extras1_runs` is numeric extras evidence in the updated file, but its exact score-total semantics remain unverified.
 - `runs` is consistent with batter runs but is not explicitly labeled; confidence is medium.
 - `extras_2_runs` is sparse and not defined by the supplied files; confidence in its exact semantics is low/medium.
 - Candidate total formulas are compared in `outputs/score_reconstruction_comparison.csv`. Result-margin agreement favors the current hypothesis over simpler alternatives, but it does not prove the formula because result strings, DLS outcomes, and source omissions can affect the comparison.

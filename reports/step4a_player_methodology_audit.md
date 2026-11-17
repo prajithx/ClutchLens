@@ -4,7 +4,7 @@ This audit establishes reproducible metric feasibility only. It creates no playe
 
 ## Executive summary
 - Supplied raw files include 200,999 delivery rows, 883 match rows, and 6,413 mapping rows.
-- `extras1_runs` remains a category code; `extras_2_runs` has 36 non-zero rows and is not semantically resolved.
+- `extras1_runs` is numeric extras evidence in the updated file but is not a verified score-total field; `extras_2_runs` has 36 non-zero rows and is not semantically resolved.
 - Batter runs, conditional balls, source boundary flags, and filtered dismissal events are partially supportable on strict/moderate subsets.
 - Legal balls and conservative bowler dismissal/dot events are descriptively supportable; conceded runs and economy remain BLOCKED.
 - Pressure contexts are observed/provisional coverage definitions, not validated player pressure ratings.

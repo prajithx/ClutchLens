@@ -21,13 +21,12 @@ NaN         189167
 
 ```text
 extras1_runs
-1       576
-2      7714
-3      2748
-4       529
-5       264
-6    189167
-7         1
+0    189167
+1     10672
+2       458
+3        47
+4       381
+5       274
 ```
 
 ### `extras_2_runs`
@@ -58,35 +57,46 @@ The following table shows the dominant combinations. The one-to-one mapping betw
 
 ```text
 extras_type  extras1_runs  extras_2_runs  runs  rows
-        NaN             6              0     1 72043
-        NaN             6              0     0 68028
-        NaN             6              0     4 23180
-        NaN             6              0     6 12741
-        NaN             6              0     2 12496
-       wide             2              0     0  7714
-    legbyes             3              0     0  2747
-        NaN             6              0     3   653
-       byes             4              0     0   529
+        NaN             0              0     1 72043
+        NaN             0              0     0 68027
+        NaN             0              0     4 23180
+        NaN             0              0     6 12741
+        NaN             0              0     2 12496
+       wide             1              0     0  7107
+    legbyes             1              0     0  2376
+        NaN             0              0     3   653
+       byes             1              0     0   348
+       wide             2              0     0   296
+       wide             5              0     0   270
+    legbyes             4              0     0   237
    Overstep             1              0     0   218
    Overstep             1              0     1   174
-      other             5              0     0   114
+       byes             4              0     0   142
+    legbyes             2              0     0   127
+      other             1              0     0   114
    Overstep             1              0     4    81
-      other             5              0     1    49
+      other             1              0     1    49
    Overstep             1              0     6    47
-      other             5              0     4    42
+      other             1              0     4    42
+       wide             3              0     0    39
+       byes             2              0     0    35
    Overstep             1              0     2    33
-      other             5              0     6    26
-        NaN             6              0     5    25
-      other             5              0     2    18
+      other             1              0     6    26
+        NaN             0              0     5    25
+      other             1              0     2    18
    Overstep             1              1     0    12
    Overstep             1              4     0     9
-      other             5              1     0     7
-      other             5              4     0     7
+      other             1              4     0     7
+      other             1              1     0     7
+    legbyes             3              0     0     5
+       byes             3              0     0     3
    Overstep             1              0     3     2
-    legbyes             3              0     1     1
-    Penalty             7              0     0     1
-      other             5              0     3     1
-        NaN             6              1     0     1
+    legbyes             5              0     0     2
+       wide             4              0     0     2
+    Penalty             5              0     0     1
+       byes             5              0     0     1
+      other             1              0     3     1
+    legbyes             0              0     1     1
 ```
 
 | extras_type | rows | runs values | extras_2_runs values |
@@ -101,9 +111,9 @@ extras_type  extras1_runs  extras_2_runs  runs  rows
 
 ## Interpretations and confidence
 
-- **`extras1_runs`: category/code only — high confidence.** Its values map exactly to observed labels: null=6, Overstep=1, wide=2, legbyes=3, byes=4, other=5, Penalty=7. It must not be added to a score.
+- **`extras1_runs`: numeric extras evidence — medium confidence.** In the updated file it is 0 on ordinary deliveries and takes positive values on labeled extras, but the schema does not define whether it is a complete extras total. It is not added to score reconstruction.
 - **`runs`: likely batter runs — medium confidence.** On null-extra deliveries it takes cricket-like batter-run values 0, 1, 2, 3, 4, 5, and 6; on wide and byes it is always 0; on Overstep/`other` it can be 0, 1, 2, 3, 4, or 6. The supplied files do not label it explicitly as batter runs.
-- **`extras_2_runs`: likely an additional numeric extra component — low/medium confidence.** It is 0 on 200,963 of 200,999 rows, with 36 non-zero rows: 21 Overstep rows, 14 `other` rows, and one null-extra row. The files do not define whether it is total extra runs, a second code, or a derived component.
+- **`extras_2_runs`: likely an additional numeric extra component — low/medium confidence.** It is 0 on 200,963 of 200,999 rows and non-zero on 36 rows, occurring in Overstep, `other`, and one null-extra row. The files do not define whether it is total extra runs, a second code, or a derived component.
 - **Total team runs: unresolved from supplied files alone.** `runs + extras_2_runs + one base run for every non-null extra` is a plausible hypothesis, but it does not reproduce every result margin and cannot be proven from a score-total column.
 - **Bowler-conceded runs: unresolved.** Byes, legbyes, penalty, and the unclear Overstep/`other` encoding prevent a reliable bowler-runs definition from this pack alone.
 
